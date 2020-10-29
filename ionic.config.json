@@ -1,0 +1,7 @@
+{
+  "name": "wegaut",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

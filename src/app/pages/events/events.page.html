@@ -1,0 +1,66 @@
+<div class="post">
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+    </ion-buttons>
+    <ion-title>Events</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button  (click)="newEvent()" color="secondary">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <!-- Refresher -->
+    <ion-refresher slot="fixed" (ionRefresh)="recharge( $event )">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let event of lstEvents">
+      <ion-item>
+        <ion-card>
+
+          <ion-card-header>
+            <ion-card-title>{{event.title}}</ion-card-title>
+            <ion-card-subtitle>{{event.descrip}}</ion-card-subtitle>
+          </ion-card-header>
+            <img class="image-post" src={{event.eventUrlFile}}/>
+            <ion-item lines="none" >
+                <ion-icon  *ngIf="!event.userFaveDate; else alreadyFav"
+                (click)="likeEvent(event.eventId)" 
+                slot="start" name="heart-outline" 
+              >
+              </ion-icon>
+              <ng-template #alreadyFav>
+                <ion-icon slot="start" name="heart" [style.color]="'#EF3B51'"></ion-icon>
+              </ng-template>
+              
+              <p>{{event.eventLikes}}</p>
+                <ion-icon (click)="scheduleEvent(event.eventId,event.date)" slot="end" name="calendar"></ion-icon>
+            </ion-item>
+          
+              <ion-card-content>
+                Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
+              </ion-card-content>
+
+        </ion-card>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+
+          <!-- Infinite Scroll -->
+          <ion-infinite-scroll
+          threshold="150px"
+          (ionInfinite)="nextEvents($event)">
+        <ion-infinite-scroll-content>
+        </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+
+</ion-content>
+
+
+</div>
