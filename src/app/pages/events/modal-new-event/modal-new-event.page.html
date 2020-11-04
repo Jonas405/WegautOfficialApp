@@ -51,10 +51,15 @@
     <ion-item>
       <ion-label>Type</ion-label>
       <ion-select [(ngModel)]="event.eventType" okText="Okay!">
-        <ion-select-option value="music">Music</ion-select-option>
-        <ion-select-option value="racing">Racing</ion-select-option>
-        <ion-select-option value="concert">Concert</ion-select-option>
-        <ion-select-option value="movie">Movie</ion-select-option>
+        <ion-select-option value="public">Public</ion-select-option>
+        <ion-select-option value="private">Private</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Sponsor</ion-label>
+      <ion-select [(ngModel)]="event.sponsor"  multiple="true" okText="Okay!">
+        <ion-select-option  *ngFor= "let l of sponsorAvailable" value ='{{ l.userBrand}}'>{{ l.userBrand}}</ion-select-option>
       </ion-select>
     </ion-item>
 

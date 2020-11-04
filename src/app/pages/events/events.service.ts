@@ -1,10 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { EventDetails,EventSheduleDetails} from 'src/app/interfaces/event';
+import { EventDetails,EventSheduleDetails, SelectedEventDetails} from 'src/app/interfaces/event';
 import { EventModel } from 'src/app/models/event-model';
 import { EventLike, ScheduleUserEvent } from 'src/app/models/schedule-user-event-models';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { Observable } from 'rxjs';
+import { UserSponsor } from 'src/app/interfaces/userSponsor';
 
 
 @Injectable({
@@ -42,8 +43,25 @@ export class EventsService {
   }
 
   postNewEvent(newEvent: EventModel){
+    console.log("from service new event" + newEvent);
     return this.http.post(`${this.url}PostNewEvent.php`, newEvent,  {responseType: 'text'} );
   }
+
+  getAllUserSponsor(userType){
+    let params1 = new HttpParams().set('userType', userType);
+    return this.http.get<UserSponsor[]>(`${this.url}GetUsersSponsor.php`,{params: params1})
+  }
+
+  getDetailsEventId(eventId){
+    let params1 = new HttpParams().set('eventId', eventId);
+    return this.http.get<SelectedEventDetails[]>(`${this.url}GetDetailsSelectedEvent.php`,{params: params1})
+  }
+
+  getSponsorOnSelectedEvent(eventId){
+    let params1 = new HttpParams().set('eventId', eventId);
+    return this.http.get<UserSponsor[]>(`${this.url}GetSponsorOnSelectedEvent.php`,{params: params1})
+  }
+
 /* 
   //upload image selected or take photo
   uploadImage(imgUrl:string){

@@ -11,6 +11,7 @@ import { EventsService } from '../events.service';
 })
 export class ModalScheduleEventPage implements OnInit {
 
+  @Input() idUserFromStorage;
   @Input() eventId;
   @Input() eventDate;
   scheduleUserEvent = new ScheduleUserEvent;
@@ -23,11 +24,12 @@ export class ModalScheduleEventPage implements OnInit {
   ngOnInit() {
     let newEventDate = new Date(this.eventDate)
     this.startCountDownDate(newEventDate)
-    this.getEventShedule("1");
+    this.getEventShedule(this.idUserFromStorage);
     console.log(newEventDate);
   }
 
   startCountDownDate(newEventDate){
+    
    let x = setInterval(()=>{
       let now = new Date().getTime();
       let distance = newEventDate- now;
@@ -51,14 +53,14 @@ export class ModalScheduleEventPage implements OnInit {
   postScheduleEvent(eventId){
     console.log("inside post schedule" + eventId);
     this.scheduleUserEvent.eventId = eventId;
-    this.scheduleUserEvent.userId = "1";
+    this.scheduleUserEvent.userId = this.idUserFromStorage;
     console.log( this.scheduleUserEvent.eventId)
     console.log( this.scheduleUserEvent.userId);
 
     this.eventService.postNewScheduleEvent(this.scheduleUserEvent)
         .subscribe(data=>{
           console.log(data);
-          this.getEventShedule("1");
+          this.getEventShedule(this.idUserFromStorage);
         })
   }
 

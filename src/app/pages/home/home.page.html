@@ -24,4 +24,22 @@
     </ion-item-sliding>
   </ion-list>
 
+ 
+    <ion-card  *ngFor="let sheduleEvent of eventSheduleDetails">
+      <ion-card-header>
+        <ion-card-title>{{sheduleEvent.eventName}}</ion-card-title>
+      </ion-card-header>
+          <ion-card-content (click)="getDetailsEvent(sheduleEvent.eventId)">
+            <ion-card-subtitle>Faltan solo:{{startCountDownDate(sheduleEvent.eventDate)}} para el evento!</ion-card-subtitle>
+            <ion-card-subtitle>{{sheduleEvent.eventDesc}} + {{sheduleEvent.eventDate}}</ion-card-subtitle>
+            <img src={{sheduleEvent.eventUrlPhoto}}/>
+           {{sheduleEvent.userLastName}}
+          </ion-card-content>
+  
+    </ion-card>
+  
+    
+
+  
+
 </ion-content>

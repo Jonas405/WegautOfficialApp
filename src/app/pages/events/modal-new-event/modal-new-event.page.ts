@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventAddModal, EventModel } from 'src/app/models/event-model';
 import { EventsService } from '../events.service';
+import { Storage } from '@ionic/storage';
+import { UserSponsor } from 'src/app/interfaces/userSponsor';
 
 declare var window: any;
 
@@ -20,14 +22,27 @@ export class ModalNewEventPage implements OnInit {
   base64Image:string;
   addModalEvent= new EventAddModal;
 
+  sponsorAvailable: UserSponsor[];
+  userSponsor: UserSponsor;
+
   constructor( private http: HttpClient,
                private modalCtrl: ModalController,
                private eventService: EventsService,
-               private camera:Camera) {
+               private camera:Camera,
+               private storage: Storage,
+               private navCtrl: NavController) {
      }
 
 
   ngOnInit() {
+    console.log("user storage" + this.storage.get('idUserFromDb'));
+    this.eventService.getAllUserSponsor('enterprise');
+
+    this.eventService.getAllUserSponsor('enterprise').subscribe((data: UserSponsor[])=>{
+    this.sponsorAvailable = data;
+      console.log(this.sponsorAvailable);
+    })
+
   }
 
   closeScheduleModal(){
@@ -73,11 +88,35 @@ export class ModalNewEventPage implements OnInit {
 
   createEvent(){
     console.log(this.event);
-    this.eventService.postNewEvent(this.event)
-    .subscribe(data=>{
-      console.log(data);
-      this.uploadImage();
+
+    this.storage.get('idUserFromDb').then((val)=>{
+      if(val != null ){
+        console.log('Your id from db storage is ', val);
+        this.event.eventUserId = val;
+        if(this.event != undefined){
+          if(this.event.titleEvent != undefined 
+            && this.event.descripEvent != undefined  
+            && this.event.dateEvent != undefined  
+            && this.event.eventType != undefined  
+            && this.event.eventCategory != undefined  ){ 
+              this.eventService.postNewEvent(this.event)
+              .subscribe(data=>{
+                console.log(data);
+                this.uploadImage();
+            }); 
+         }else{
+            alert("Is mandatory all fields for create new event");
+          }
+            }else{
+              alert("Is mandatory all fields for create new event");
+          }
+      }else{
+        this.navCtrl.navigateRoot('/login');
+        console.log("no id user storage! review")
+      }
     })
+
+   
   }
   
   uploadImage(){

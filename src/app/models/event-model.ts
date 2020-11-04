@@ -1,4 +1,5 @@
 export class EventModel{
+    eventUserId?:      string;
     titleEvent?:         string;
     descripEvent?:       string;
     dateEvent?:          string;
@@ -6,10 +7,12 @@ export class EventModel{
     eventType?:   string;
     urlCoverPageEvent?:  string;
     urlWebPageEvent?:    string;
+    sponsor?:[];
 }
 
 export class EventAddModal {
     eventId?:       string;
+    eventUserId?:   string;
     title?:         string;
     descrip?:       string;
     date?:          string;
@@ -18,5 +21,6 @@ export class EventAddModal {
     eventUrlFile?:  string;
     urlWebSite?:    string;
     userFaveDate?:    string;
+    sponsor?: [];
     eventLikes?: string;
 }

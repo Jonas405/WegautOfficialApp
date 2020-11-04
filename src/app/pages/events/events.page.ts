@@ -1,11 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventAddModal } from 'src/app/models/event-model';
 import { EventLike } from 'src/app/models/schedule-user-event-models';
 import { EventsService } from './events.service';
+import { ModalDetailsEventPage } from './modal-details-event/modal-details-event.page';
 import { ModalNewEventPage } from './modal-new-event/modal-new-event.page';
 import { ModalScheduleEventPage } from './modal-schedule-event/modal-schedule-event.page';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-events',
@@ -21,15 +23,19 @@ export class EventsPage implements OnInit {
   lstEvents = [];
   eventLike = new EventLike;
   addEventToList = new EventAddModal;
+  idUserFromStorage: string;
 
   constructor(private eventService: EventsService,
               private modalCrtl: ModalController,
-              private elementRef: ElementRef) { }
+              private elementRef: ElementRef,
+              private storage: Storage,
+              private navCtrl: NavController) { }
 
 
   ngOnInit() {
     this.nextEvents();
    // this. getEventsDetails();
+   this.getUserIdFromStorage();
   }
 
   recharge(event){
@@ -70,12 +76,24 @@ export class EventsPage implements OnInit {
     })
   }
 
+  getUserIdFromStorage(){
+    this.storage.get('idUserFromDb').then((val)=>{
+      if(val != null ){
+        console.log('Your id from db storage is home ', val);
+       this.idUserFromStorage = val;
+      }else{
+        this.navCtrl.navigateRoot('/login');
+      }
+    })
+  }
+
   async scheduleEvent(eventId,eventDate){
     console.log("shedule event" + eventId);
     console.log("event date " + eventDate);
     const modal = await this.modalCrtl.create({
       component: ModalScheduleEventPage,
       componentProps:{
+        'idUserFromStorage': this.idUserFromStorage,
         'eventId': eventId,
         'eventDate': eventDate
       }
@@ -98,21 +116,38 @@ export class EventsPage implements OnInit {
       console.log("Entro en el modal didmiss")
       console.log(data);
 
-  //    this.addEventToList.title = data.data.EventModel.titleEvent;
-   //   this.addEventToList.descrip = data.data.EventModel.descripEvent;
-   //   this.addEventTolist. = 
-
-      this.lstEvents.unshift(data.data);
-      console.log("imprimiendo la lista");
-      console.log(this.lstEvents);
-
-     // this.nextEvents(); // Here's your selected user!
-
+      if(data.data != undefined){
+        if(data.data.date != undefined 
+          && data.data.descrip != undefined  
+          && data.data.date != undefined  
+          && data.data.eventUrlFile != undefined  
+          && data.data.title != undefined  ){
+         this.lstEvents.unshift(data.data);
+         console.log("imprimiendo la lista");
+         console.log(this.lstEvents);
+       }
+      }
     });
-
     await modal.present();
   
   }
+
+  async getDetailsEvent(eventId){
+    console.log("this is the view details"+eventId);
+    
+    const modal = await this.modalCrtl.create({
+      component: ModalDetailsEventPage,
+      componentProps:{
+       'eventId': eventId
+      }
+    });
+
+    await modal.present();
+  }
+
+
+
+  
 
 /*   getEventsDetails(){
     this.eventService.getEventsDetails().subscribe((data: EventDetails[])=>{

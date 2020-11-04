@@ -12,7 +12,8 @@ import { HttpClientModule} from '@angular/common/http'
 import { Camera} from '@ionic-native/camera/ngx';
 import { ImageSanitizerPipe } from './pipes/image-sanitizer.pipe'
 import { FileTransfer} from '@ionic-native/file-transfer/ngx';
-
+import { IonicStorageModule } from '@ionic/storage';
+import { CountdownModule } from 'ngx-countdown';
 
 
 
@@ -21,8 +22,10 @@ import { FileTransfer} from '@ionic-native/file-transfer/ngx';
   entryComponents: [],
   imports: [BrowserModule, 
             IonicModule.forRoot(),
+            IonicStorageModule.forRoot(),
             AppRoutingModule,
-            HttpClientModule
+            HttpClientModule,
+            CountdownModule
             ],
   providers: [
     StatusBar,
