@@ -34,3 +34,13 @@ img {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+textarea, input 
+{ 
+ font-size: 15px;   
+ background:none; 
+ outline: none; 
+ -webkit-appearance: none; 
+ box-shadow: none !important; 
+ border: none; 
+}

@@ -6,15 +6,23 @@
 
 <ion-content padding>
 
-  <p>{{demo}}</p>
+    <p *ngIf="eventId; else noDate">{{demo}}</p>
+    <ng-template #noDate>
+      <p> </p>
+         </ng-template>
+       
 
   <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
      Close Modal
   </ion-button>
 
-  <ion-button (click)="postScheduleEvent(eventId)" color="secondary" expand="full">
+  <ion-button *ngIf="eventId; else noExits" (click)="postScheduleEvent(eventId)" color="secondary" expand="full">
     Add Schedule event
   </ion-button>
+
+  <ng-template #noExits>
+ <p> </p>
+    </ng-template>
   
   <ion-card *ngFor="let sheduleEvent of eventSheduleDetails">
     <ion-card-header>

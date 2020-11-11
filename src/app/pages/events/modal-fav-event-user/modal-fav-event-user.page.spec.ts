@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { EventsPage } from './events.page';
+import { ModalFavEventUserPage } from './modal-fav-event-user.page';
 
-describe('EventsPage', () => {
-  let component: EventsPage;
-  let fixture: ComponentFixture<EventsPage>;
+describe('ModalFavEventUserPage', () => {
+  let component: ModalFavEventUserPage;
+  let fixture: ComponentFixture<ModalFavEventUserPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventsPage ],
+      declarations: [ ModalFavEventUserPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EventsPage);
+    fixture = TestBed.createComponent(ModalFavEventUserPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

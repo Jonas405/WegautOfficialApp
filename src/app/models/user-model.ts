@@ -10,3 +10,18 @@ export class UserModel {
     userUrlProfilePicture?: string;
     userLevel?: string;
 }
+
+export class UserFollow{
+    userIdFollower: string;
+    userIdFollowed: string;
+}
+
+export class UserComment{
+    commentId: string;
+    eventId: string;
+    userId: string;
+    comment: string;
+    commentDate: string;
+
+}
+

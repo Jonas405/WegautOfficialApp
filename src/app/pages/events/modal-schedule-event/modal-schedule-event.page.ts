@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { EventSheduleDetails } from 'src/app/interfaces/event';
 import { ScheduleUserEvent } from 'src/app/models/schedule-user-event-models';
 import { EventsService } from '../events.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-modal-schedule-event',
@@ -11,20 +12,25 @@ import { EventsService } from '../events.service';
 })
 export class ModalScheduleEventPage implements OnInit {
 
-  @Input() idUserFromStorage;
+  //@Input() idUserFromStorage;
   @Input() eventId;
   @Input() eventDate;
   scheduleUserEvent = new ScheduleUserEvent;
   eventSheduleDetails: EventSheduleDetails[];
   demo: any;
+  idUserFromStorage: string;
   
   constructor(private modalCtrl: ModalController,
-              private eventService: EventsService) { }
+              private eventService: EventsService,
+              private storage: Storage,
+              private navCtrl: NavController) { }
 
   ngOnInit() {
     let newEventDate = new Date(this.eventDate)
+    this.getUserIdFromStorage();
     this.startCountDownDate(newEventDate)
     this.getEventShedule(this.idUserFromStorage);
+    console.log(this.idUserFromStorage);
     console.log(newEventDate);
   }
 
@@ -70,5 +76,18 @@ export class ModalScheduleEventPage implements OnInit {
       console.log(this.eventSheduleDetails);
     })
   }
+
+  getUserIdFromStorage(){
+    this.storage.get('idUserFromDb').then((val)=>{
+      if(val != null ){
+        console.log('Your id from db storage is home ', val);
+       this.idUserFromStorage = val;
+      }else{
+        this.navCtrl.navigateRoot('/login');
+      }
+    })
+  }
+
+
 
 }

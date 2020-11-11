@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { EventDetails,EventSheduleDetails, SelectedEventDetails} from 'src/app/interfaces/event';
+import { EventComments, EventDetails,EventSheduleDetails, SelectedEventDetails} from 'src/app/interfaces/event';
 import { EventModel } from 'src/app/models/event-model';
 import { EventLike, ScheduleUserEvent } from 'src/app/models/schedule-user-event-models';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { Observable } from 'rxjs';
 import { UserSponsor } from 'src/app/interfaces/userSponsor';
+import { UserComment } from 'src/app/models/user-model';
 
 
 @Injectable({
@@ -61,6 +62,16 @@ export class EventsService {
     let params1 = new HttpParams().set('eventId', eventId);
     return this.http.get<UserSponsor[]>(`${this.url}GetSponsorOnSelectedEvent.php`,{params: params1})
   }
+
+  getCommentsEvent(eventId){
+    let params1 = new HttpParams().set('eventId', eventId);
+    return this.http.get<EventComments[]>(`${this.url}GetCommentsEvent.php`,{params: params1})
+  }
+
+  postCommentEvent(userComment: UserComment){
+    return this.http.post(`${this.url}PostCommentEvent.php`, userComment,  {responseType: 'text'} );
+  }
+
 
 /* 
   //upload image selected or take photo

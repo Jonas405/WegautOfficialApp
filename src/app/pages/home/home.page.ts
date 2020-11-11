@@ -4,6 +4,8 @@ import { Storage } from '@ionic/storage';
 import { ModalController, NavController } from '@ionic/angular';
 import { EventSheduleDetails } from 'src/app/interfaces/event';
 import { CountdownComponent } from 'ngx-countdown';
+import { HomeService } from './home.service';
+import { ModalFollowUsersPage } from './modal-follow-users/modal-follow-users.page';
 import { ModalDetailsEventPage } from '../events/modal-details-event/modal-details-event.page';
 
 
@@ -22,7 +24,8 @@ export class HomePage {
   constructor(private eventService: EventsService,
               private storage: Storage,
               private navCtrl: NavController,
-              private modalCrtl: ModalController,) {}
+              private modalCrtl: ModalController,
+              private homeService: HomeService) {}
 
 
 
@@ -80,5 +83,29 @@ export class HomePage {
 
     await modal.present();
   }
+
+  async findUsers(){
+    
+    const modal = await this.modalCrtl.create({
+      component: ModalFollowUsersPage
+    });
+
+    await modal.present();
+  }
+/* 
+  findUsers(){
+    
+    this.storage.get('idUserFromDb').then((val)=>{
+      if(val != null ){
+        console.log('Your id from db storage is home ', val);
+        this.homeService.getUserToFollow(val)
+        .subscribe(data=>{
+          console.log(data);   
+        })
+      }else{
+        this.navCtrl.navigateRoot('/login');
+      }
+    })
+  } */
 
 }

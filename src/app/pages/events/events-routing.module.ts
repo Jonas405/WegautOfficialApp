@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'modal-details-event',
     loadChildren: () => import('./modal-details-event/modal-details-event.module').then( m => m.ModalDetailsEventPageModule)
+  },
+  {
+    path: 'modal-fav-event-user',
+    loadChildren: () => import('./modal-fav-event-user/modal-fav-event-user.module').then( m => m.ModalFavEventUserPageModule)
   }
 ];
 

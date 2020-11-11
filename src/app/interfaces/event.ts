@@ -54,6 +54,19 @@ export interface EventProfileUser{
 
 }
 
+export interface EventComments{
+    commentId:string;
+    eventId:string;
+    commmentDate:string;
+    userIdComment:string;
+    userId:string;
+    userName:string;
+    userLastName:string;
+    userBrand: string;
+    userPhoto: string;
+    comment: string;
+}
+
 
 
 

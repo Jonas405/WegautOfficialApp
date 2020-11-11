@@ -1,9 +1,102 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>modal-details-profile</ion-title>
+    <ion-buttons slot="start">
+      <ion-button>
+        <img  src="../../assets/logow.JPG" style="width: 30px;height: 30px;"/>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
+      Close Modal
+   </ion-button>
+
+    <ion-title class="ion-text-center">
+    {{userBrand}}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button >
+        <ion-icon slot="icon-only" name="cog"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
+
 </ion-header>
 
 <ion-content>
+<!--   <ion-refresher slot="fixed" style="--ion-text-color: var(--ion-color-medium);" >
+    <ion-refresher-content pullingIcon="arrow-down-outline"></ion-refresher-content>
+  </ion-refresher> -->
+  <ion-list lines="none">
+    <ion-item lines="none">
+      <ion-avatar slot="start" style="width: 72px;height: 72px;">
+        <img [src]="userProfilePicture">
+      </ion-avatar>
+      <ion-label>
+        <h1 style="font-weight: bold;">{{userName}}</h1>
+        <h2>{{userTradeName}}</h2>
+        <h3>{{userAbout}}</h3>
+      </ion-label>
+    </ion-item>
+    <ion-card>
+      <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <h3>{{userFollowersNumber}}</h3>
+          <h4>Seguidores</h4>
+        </ion-col>
+  
+        <ion-col>
+          <h3>{{userEventNumber}}</h3>
+          <h4>Eventos</h4>
+        </ion-col>
+  
+        <ion-col>
+          <h3>{{userLevel}}</h3>
+          <h4>Nivel</h4>
+        </ion-col>
+        </ion-row>
 
+        <div  *ngIf="!eventProfileUser; else follow">
+          <ion-button expand="full" color="secondary">Follow</ion-button>
+        </div>
+        <ng-template #follow>
+          <ion-button expand="full" color="secondary">Followed</ion-button>
+      </ng-template>
+
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-row>
+    <ion-col>
+      <ion-icon (click)="goToScheduleEvents()" name="calendar" [style.color]="'#4040ff'"></ion-icon>
+      <p size="6">Asistiré</p>
+    </ion-col>
+
+    <ion-col>
+      <ion-icon (click)="getUserFavEvets()" name="heart" [style.color]="'#EF3B51'"></ion-icon>
+      <p size="6">Favoritos</p>
+    </ion-col>
+    </ion-row>
+    <div  *ngIf="!eventProfileUser; else followed">
+      <p class="p2">user without events</p>
+    </div>
+    <ng-template #followed>
+    <ion-card>
+      <ion-card-content>
+        
+      <ion-row>
+        <ion-col sizeLg="4" sizeMd="4" sizeXs="4" *ngFor="let event of eventProfileUser">
+            <img (click)="getDetailsEvent(event.eventId)" class="img-event" src="{{event.eventPrincipalPhoto}}"/>
+            <p class="p1">{{event.eventTitle}}</p>
+        </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>
+
+
+  

@@ -64,15 +64,32 @@ export class EventsPage implements OnInit {
         }
       });
   }
+
+  incrementLike(event){
+    event.userFaveDate = true; 
+    console.log(event);
+    var x = event.eventLikes 
+    var y : number = +x;
+    console.log(y);
+    event.eventLikes = y + 1;
+    console.log(event.eventLikes);
+   }
   
   likeEvent(eventId){
-    console.log("like event" + eventId);
-    this.eventLike.eventId = eventId;
-    this.eventLike.userId = "1";
-    console.log("like event" + this.eventLike.eventId);
-    this.eventService.postNewLikeEvent(this.eventLike)
-    .subscribe(data=>{
-      console.log(data);   
+
+    this.storage.get('idUserFromDb').then((val)=>{
+      if(val != null ){
+        console.log('Your id from db storage is home ', val);
+        this.eventLike.eventId = eventId;
+        this.eventLike.userId = val;
+        console.log("like event" + this.eventLike.eventId);
+        this.eventService.postNewLikeEvent(this.eventLike)
+        .subscribe(data=>{
+          console.log(data);   
+        })
+      }else{
+        this.navCtrl.navigateRoot('/login');
+      }
     })
   }
 

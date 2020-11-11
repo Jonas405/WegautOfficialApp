@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: HomePage,
+  },
+  {
+    path: 'modal-follow-users',
+    loadChildren: () => import('./modal-follow-users/modal-follow-users.module').then( m => m.ModalFollowUsersPageModule)
   }
 ];
 

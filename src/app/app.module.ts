@@ -14,7 +14,7 @@ import { ImageSanitizerPipe } from './pipes/image-sanitizer.pipe'
 import { FileTransfer} from '@ionic-native/file-transfer/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { CountdownModule } from 'ngx-countdown';
-
+import {AutosizeModule} from 'ngx-autosize';
 
 
 @NgModule({
@@ -25,7 +25,8 @@ import { CountdownModule } from 'ngx-countdown';
             IonicStorageModule.forRoot(),
             AppRoutingModule,
             HttpClientModule,
-            CountdownModule
+            CountdownModule,
+            AutosizeModule
             ],
   providers: [
     StatusBar,

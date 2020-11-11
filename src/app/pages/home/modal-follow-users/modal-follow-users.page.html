@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>modal-follow-users</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+  <ion-content padding>
+    <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
+      Close Modal
+   </ion-button>
+
+   <ion-list lines="none">
+    <ion-item lines="none"  *ngFor="let user of usersProfile">
+      <ion-avatar slot="start" style="width: 72px;height: 72px;">
+        <img [src]="user.userProfilePicture" (click)="goToSponsorProfile(user.userId)">
+      </ion-avatar>
+      <ion-label>
+        <h2 style="font-weight: bold;">{{user.userName}} {{user.userLastName}}</h2>
+        <p>{{user.userAbout}}</p>
+      </ion-label>
+      <button  
+      (click)="followUser(user.userId)" 
+       (click)="changeShowFollow(user)"
+       ion-button icon-end item-end >
+        <div  *ngIf="!user.userFollow; else followed">
+          <p>Follow</p>
+          <ion-icon  name="add"></ion-icon>
+        </div>
+        <ng-template #followed>
+          <p>Followed</p>
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </ng-template>
+      </button>
+    </ion-item>
+    </ion-list>
+  </ion-content>
+
+
