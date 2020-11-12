@@ -65,7 +65,7 @@ export class HomePage {
        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-       demo = days +"d " + hours + "h ";
+       demo = days +" days";
        return demo;
     
     //  console.log("valor abajo");
@@ -91,6 +91,13 @@ export class HomePage {
     });
 
     await modal.present();
+  }
+
+  
+  doRefresh(event){
+    console.log("do refresh")
+      this.ngOnInit();
+      event.target.complete();
   }
 /* 
   findUsers(){

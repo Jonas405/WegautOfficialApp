@@ -7,6 +7,11 @@ import { ModalFavEventUserPage } from '../../events/modal-fav-event-user/modal-f
 import { ModalScheduleEventPage } from '../../events/modal-schedule-event/modal-schedule-event.page';
 import { ProfileService } from '../profile.service';
 import { Storage } from '@ionic/storage';
+import { UserFollow } from 'src/app/models/user-model';
+import { HomeService } from '../../home/home.service';
+import { NotificationModel } from 'src/app/models/notification-model';
+import { NotificationService } from '../../notification/notification.service';
+import { ModalFollowersDetailsPage } from '../modal-followers-details/modal-followers-details.page';
 
 @Component({
   selector: 'app-modal-details-profile',
@@ -26,13 +31,18 @@ export class ModalDetailsProfilePage implements OnInit {
   userAbout: string;
   userLevel: string;
 
+  checkFollowUser;
+  userFollow = new UserFollow;
+  userFollowedId : string;
 
 
   @Input() sponsorUserId;
 
   constructor( private profileService: ProfileService,
                private modalCrtl: ModalController,
-               private storage: Storage) { }
+               private storage: Storage,
+               private homeService: HomeService,
+               private notificationService: NotificationService) { }
 
   ngOnInit() {
     console.log("sponsor from modal"+this.sponsorUserId);
@@ -47,6 +57,7 @@ export class ModalDetailsProfilePage implements OnInit {
     this.profileService.getUserProfileDetails(userId)
     .subscribe((data)=>{
     
+      console.log("profile user details userId" + data[0].userId);
       console.log("profile user details userBrand" + data[0].userBrand);
       console.log("profile user details userName" + data[0].userName);
       console.log("profile user details userTradeName" + data[0].userTradeName);
@@ -54,6 +65,8 @@ export class ModalDetailsProfilePage implements OnInit {
       console.log("profile user details userType" + data[0].userType);
       console.log("profile user details userType" + data[0].userAbout);
 
+      this.userFollowedId =  data[0].userId;
+      this.userBrand = data[0].userBrand;
       this.userBrand = data[0].userBrand;
       this.userName = data[0].userName;
       this.userTradeName = data[0].userTradeName;
@@ -140,12 +153,69 @@ closeScheduleModal(){
         console.log(this.sponsorUserId);
         this.profileService.getCheckUserFollow(val, this.sponsorUserId)
         .subscribe((data)=>{
-          console.log(data);
+          if(data != null){
+            this.checkFollowUser = data;
+            console.log("data es distinto de nulo")
+          }else{
+            this.checkFollowUser = data;
+            console.log("data es nulo")
+          }
         })
       }
     })
   
   }
+
+  
+  followUser(){
+    this.storage.get('idUserFromDb').then((val)=>{
+      if(val != null ){
+        console.log('Your id from db storage is home ', val);
+        this.userFollow.userIdFollowed  = this.userFollowedId;
+        this.userFollow.userIdFollower = val;
+        this.homeService.postFollowUser(this.userFollow)
+        .subscribe(data=>{
+          console.log(data);   
+          this.changeShowFollow();
+          this.postNotification(this.userFollow.userIdFollower);
+        })
+      }
+    })
+  }
+
+  postNotification(userFollower){
+    
+    let date: Date = new Date();
+    let notification= new NotificationModel;
+    notification.idUser = userFollower;
+    notification.notificationDate = date;
+    notification.notificationDesc = "follow new user";
+   // notification.notificationUrlFile = urlFile;
+
+    this.notificationService.postNotification(notification)
+    .subscribe(data=>{
+      console.log(data);
+  }); 
+  }
+
+  changeShowFollow(){
+    this.checkIfFollowUser();
+  }
+
+  
+  async checkFollowers(){
+    
+    const modal = await this.modalCrtl.create({
+      component: ModalFollowersDetailsPage,
+      componentProps:{
+        'sponsorUserId': this.sponsorUserId,
+        'userName': this.userName
+       }
+    });
+
+    await modal.present();
+  }
+  
 
 
 }

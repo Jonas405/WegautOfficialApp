@@ -44,7 +44,7 @@
               </ng-template>
               
               <p>{{event.eventLikes}}</p>
-                <ion-icon (click)="scheduleEvent(event.eventId,event.date)" slot="end" name="calendar"></ion-icon>
+                <ion-icon (click)="scheduleEvent(event.eventId,event.date, event.title,event.descrip,event.eventUrlFile)" slot="end" name="calendar"></ion-icon>
             </ion-item>
               <ion-card-content>
                {{event.descrip}}

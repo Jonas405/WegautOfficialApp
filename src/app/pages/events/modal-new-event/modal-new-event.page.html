@@ -1,7 +1,7 @@
 <ion-header no-border>
-  <ion-toolbar>
+  <ion-toolbar> 
     <ion-title>
-      Nuevo Post
+      New Event
     </ion-title>
 
     <ion-buttons slot="end">
@@ -15,19 +15,17 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
-    Close Modal
- </ion-button>
+ 
 
  
 
   <ion-list>
     
     <ion-item>
-      <ion-label position="floating">titleEvent</ion-label>
+      <ion-label position="floating">Event Title</ion-label>
       <ion-textarea [(ngModel)]="event.titleEvent"></ion-textarea>
 
-      <ion-label position="floating">descripEvent</ion-label>
+      <ion-label position="floating">Event Detail</ion-label>
       <ion-textarea [(ngModel)]="event.descripEvent"></ion-textarea>
 
       <ion-label position="floating">Event Date</ion-label>
@@ -37,9 +35,12 @@
       max="2025-12-31">
     </ion-datetime>
 
+    <ion-label position="floating">Event Location</ion-label>
+    <ion-textarea [(ngModel)]="event.eventLocation"></ion-textarea>
+
     
     <ion-item>
-      <ion-label>Category</ion-label>
+      <ion-label position="floating">Event Category</ion-label>
       <ion-select [(ngModel)]="event.eventCategory" okText="Okay!">
         <ion-select-option value="music">Music</ion-select-option>
         <ion-select-option value="racing">Racing</ion-select-option>
@@ -49,7 +50,7 @@
     </ion-item>
       
     <ion-item>
-      <ion-label>Type</ion-label>
+      <ion-label position="floating">Event Type</ion-label>
       <ion-select [(ngModel)]="event.eventType" okText="Okay!">
         <ion-select-option value="public">Public</ion-select-option>
         <ion-select-option value="private">Private</ion-select-option>
@@ -57,31 +58,22 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Sponsor</ion-label>
+      <ion-label position="floating">Event Sponsor</ion-label>
       <ion-select [(ngModel)]="event.sponsor"  multiple="true" okText="Okay!">
         <ion-select-option  *ngFor= "let l of sponsorAvailable" value ='{{ l.userBrand}}'>{{ l.userBrand}}</ion-select-option>
       </ion-select>
     </ion-item>
-
-      
-      <ion-label position="floating">urlCoverPageEvent</ion-label>
-      <img [src]="base64Image"/>
-
-      <ion-label position="floating">urlWebPageEvent</ion-label>
+      <ion-label position="floating">Event Web Page</ion-label>
       <ion-textarea [(ngModel)]="event.urlWebPageEvent"></ion-textarea>
     </ion-item>
 
-    <ion-list>
-      <ion-item>
-        <ion-label>Location</ion-label>
-        <ion-spinner name="lines-small"></ion-spinner>
-        <ion-toggle slot="end"></ion-toggle>
-      </ion-item>
-    </ion-list>
-
+    <ion-item>
+    <ion-label position="floating">Event Cover</ion-label>
+    <img [src]="base64Image"/>
+  </ion-item>
 
   </ion-list>
-
+  
   <ion-row>
     <ion-col size="6">
       <ion-button expand="full"
@@ -94,20 +86,23 @@
     <ion-col size="6">
       <ion-button expand="full"
                   shape="round"
-                  (click)="openGallery()">>
+                  (click)="openGallery()">
         <ion-icon slot="start" name="images"></ion-icon>
         Gallery
       </ion-button>
     </ion-col>
   </ion-row>
 
-  <ion-row>
+  <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
+    Close
+ </ion-button>
+<!--   <ion-row>
     <ion-col size="3" *ngFor="let image of tempImages">
       <ion-card>
         <img [src]="image | imageSanitizer">
       </ion-card>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
 </ion-content>
 

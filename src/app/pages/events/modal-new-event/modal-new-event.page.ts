@@ -7,6 +7,8 @@ import { EventAddModal, EventModel } from 'src/app/models/event-model';
 import { EventsService } from '../events.service';
 import { Storage } from '@ionic/storage';
 import { UserSponsor } from 'src/app/interfaces/userSponsor';
+import { NotificationService } from '../../notification/notification.service';
+import { NotificationModel } from 'src/app/models/notification-model';
 
 declare var window: any;
 
@@ -24,13 +26,14 @@ export class ModalNewEventPage implements OnInit {
 
   sponsorAvailable: UserSponsor[];
   userSponsor: UserSponsor;
-
+  idUserStorage: string;
   constructor( private http: HttpClient,
                private modalCtrl: ModalController,
                private eventService: EventsService,
                private camera:Camera,
                private storage: Storage,
-               private navCtrl: NavController) {
+               private navCtrl: NavController,
+               private notificationService: NotificationService) {
      }
 
 
@@ -93,6 +96,7 @@ export class ModalNewEventPage implements OnInit {
       if(val != null ){
         console.log('Your id from db storage is ', val);
         this.event.eventUserId = val;
+        this.idUserStorage = val;
         if(this.event != undefined){
           if(this.event.titleEvent != undefined 
             && this.event.descripEvent != undefined  
@@ -134,10 +138,26 @@ export class ModalNewEventPage implements OnInit {
       this.addModalEvent.descrip = this.event.descripEvent;
       this.addModalEvent.date = this.event.dateEvent;
       this.addModalEvent.eventUrlFile = this.base64Image;
- 
+      this.postNotification(this.addModalEvent.eventUrlFile);
       this.modalCtrl.dismiss(this.addModalEvent);
     });
     
+  }
+
+
+  postNotification(urlFile){
+    
+    let date: Date = new Date();
+    let notification= new NotificationModel;
+    notification.idUser = this.idUserStorage;
+    notification.notificationDate = date;
+    notification.notificationDesc = "new event created";
+    notification.notificationUrlFile = urlFile;
+
+    this.notificationService.postNotification(notification)
+    .subscribe(data=>{
+      console.log(data);
+  }); 
   }
 
 /*   processingImage(options: CameraOptions){

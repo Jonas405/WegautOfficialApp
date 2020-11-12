@@ -1,10 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="secondary">
-    </ion-buttons>
-    <ion-title>Home</ion-title>
-    <ion-buttons slot="primary">
-      <ion-button  (click)="findUsers()" color="secondary">
+    <ion-title>Schedule Events</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  (click)="findUsers()" class="color-find">
+        <p>Find</p>
         <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -12,39 +11,29 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-  <ion-list>
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card>
-            <img src="../../assets/amsterdam.jpg"/>
-            <ion-fab right bottom>
-                <button ion-fab>
-                <ion-icon name="brush"></ion-icon>
-              </button>
-              </ion-fab>
-              <div class="card-title">Amsterdam</div>
-        </ion-card>
-      </ion-item>
-    </ion-item-sliding>
-  </ion-list>
-
- 
     <ion-card  *ngFor="let sheduleEvent of eventSheduleDetails">
-      <ion-card-header>
-        <ion-card-title>{{sheduleEvent.eventName}}</ion-card-title>
-      </ion-card-header>
-          <ion-card-content (click)="getDetailsEvent(sheduleEvent.eventId)">
-            <ion-card-subtitle>Faltan solo:{{startCountDownDate(sheduleEvent.eventDate)}} para el evento!</ion-card-subtitle>
-            <ion-card-subtitle>{{sheduleEvent.eventDesc}} + {{sheduleEvent.eventDate}}</ion-card-subtitle>
-            <img src={{sheduleEvent.eventUrlPhoto}}/>
-           {{sheduleEvent.userLastName}}
-          </ion-card-content>
-  
+            <ion-item>
+              <ion-avatar slot="start" style="width: 72px;height: 72px;">
+                <img [src]="sheduleEvent.eventUrlPhoto">
+              </ion-avatar>
+              <ion-label>
+                <h2 class="p3">{{sheduleEvent.eventName}}</h2>
+                <p class="p4" >Date : {{sheduleEvent.eventDate}}</p>
+               
+                <p class="p4">{{sheduleEvent.eventDesc}}</p>
+              </ion-label>
+            </ion-item>
+            <ion-row>
+              <ion-col></ion-col>
+              <ion-col> </ion-col>
+              <ion-col>
+                <p class="p2" >{{startCountDownDate(sheduleEvent.eventDate)}}</p>
+              </ion-col>
+            </ion-row>
+           
     </ion-card>
-  
-    
-
-  
-
 </ion-content>

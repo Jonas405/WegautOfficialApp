@@ -154,5 +154,11 @@ async scheduleEvent(userId){
 
     await modal.present();
   }
+
+  doRefresh(event){
+    console.log("do refresh")
+      this.ngOnInit();
+      event.target.complete();
+  }
    
 }

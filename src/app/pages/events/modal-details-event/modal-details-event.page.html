@@ -1,8 +1,19 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title style="text-align: center;">Event Details</ion-title>
+      <ion-buttons slot="primary">
+        <button ion-button icon-only (click)="closeEventDetail()">
+          <ion-icon  slot="end" name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+
 <ion-content>
-<ion-button (click)="closeEventDetail()">close modal</ion-button>
       <ion-card *ngFor="let event of selectedEvent">
           <ion-card-header>
-            <ion-card-title>{{event.eventTitle}}</ion-card-title>
+            <ion-card-title class="p2">{{event.eventTitle}}</ion-card-title>
           </ion-card-header>
             <img class="image-post" src={{event.eventPrincipalPhoto}}/>
           

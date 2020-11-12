@@ -1,9 +1,29 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>notification</ion-title>
+    <ion-title style="text-align: center;">Notifications</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
+  
+    <ion-content padding>
+     <ion-list lines="none">
+      <ion-item lines="none"  *ngFor="let not of notificationDetails">
+        <ion-avatar slot="start" style="width: 72px;height: 72px;">
+          <img [src]="not.userPhoto" (click)="goToSponsorProfile(not.idUser)">
+        </ion-avatar>
+        <ion-label>
+          <h2 style="font-weight: bold;">{{not.userName}} {{not.userLastName}}</h2>
+          <p>{{not.notificationDesc}}</p>
+        </ion-label>
+      </ion-item>
+      </ion-list>
+    </ion-content>
+  
+  
+  
 </ion-content>

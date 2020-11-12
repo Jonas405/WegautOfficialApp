@@ -25,3 +25,66 @@
 #container a {
   text-decoration: none;
 }
+
+img {
+  height:100px;
+  width: 100px;
+  border-radius: 10px;
+}
+
+.p2{ 
+  margin: 0;
+  text-align: center;
+    padding: 10px;
+    font-size:16px;
+    background:rgb(131, 44, 139);
+    color:#fff;
+    text-transform: uppercase;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 10px 8px 15px #6660;
+}
+
+.p3{ 
+    font-weight: bold;
+    font-size:16px;
+    color:rgb(195, 0, 255);
+    text-transform: uppercase;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 10px 8px 15px #6660;
+}
+
+.p4{ 
+  font-size:16px;
+  color:rgb(195, 0, 255);
+  text-transform: uppercase;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 10px 8px 15px #6660;
+}
+
+.card {
+  background-color: rgb(224, 219, 219); // black
+}
+
+ion-card{
+  display: flex;
+  flex-direction: column;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.timer{
+  margin:10px;
+  width: 60px;
+  background: rgba(0,0,0,0.5);
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 10px 8px 15px #6660;
+  cursor: pointer;
+}
+
+.color-find{
+  color:rgb(132, 8, 163)
+}

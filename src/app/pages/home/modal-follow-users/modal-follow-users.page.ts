@@ -76,4 +76,6 @@ export class ModalFollowUsersPage implements OnInit {
     user.userFollow = true;
   }
 
+  
+
 }

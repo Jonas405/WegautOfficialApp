@@ -8,6 +8,7 @@ export class EventModel{
     urlCoverPageEvent?:  string;
     urlWebPageEvent?:    string;
     sponsor?:[];
+    eventLocation?: string;
 }
 
 export class EventAddModal {

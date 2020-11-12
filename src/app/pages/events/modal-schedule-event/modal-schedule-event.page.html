@@ -1,39 +1,88 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> idEvent {{eventId}} {{eventDate}} modal-schedule-event</ion-title>
+    <ion-title style="text-align: center;">Schedule Event</ion-title>
+    <ion-buttons slot="primary">
+      <button ion-button icon-only (click)="closeScheduleModal()">
+        <ion-icon  slot="end" name="close"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content padding>
 
-    <p *ngIf="eventId; else noDate">{{demo}}</p>
+  <div *ngIf="eventId; else noDate">
+  <img class="image-post" src={{eventUrlFile}}/>
+   <h1 class="p2">{{eventTitle}}</h1>
+   <p class="p1">  {{eventDescp}}</p>
+   <p class="p1"> Date event: {{eventDate}}</p>
+  
+      <ion-grid>
+      <ion-row>
+      <ion-col class="timer" >
+          <p>{{dayD}}:</p>
+          <h6>D</h6>
+         </ion-col>
+  
+        <ion-col class="timer">
+          <p>{{hourD}}:</p>
+          <h6>H</h6>
+        </ion-col>
+  
+        <ion-col  class="timer">
+          <p>{{minuteD}}:</p>
+          <h6>M</h6>
+        </ion-col>
+  
+         <ion-col class="timer">
+          <p>{{secondD}}</p>
+          <h6>S</h6>
+         </ion-col>
+        </ion-row>
+      </ion-grid>
+     
+    </div>
+
+  
     <ng-template #noDate>
       <p> </p>
          </ng-template>
-       
-
-  <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
-     Close Modal
-  </ion-button>
+      
 
   <ion-button *ngIf="eventId; else noExits" (click)="postScheduleEvent(eventId)" color="secondary" expand="full">
-    Add Schedule event
+    Schedule event
   </ion-button>
 
   <ng-template #noExits>
  <p> </p>
     </ng-template>
   
-  <ion-card *ngFor="let sheduleEvent of eventSheduleDetails">
+<!--   <ion-card *ngFor="let sheduleEvent of eventSheduleDetails">
     <ion-card-header>
       <ion-card-title>{{sheduleEvent.eventName}}</ion-card-title>
       <ion-card-subtitle>{{sheduleEvent.eventDesc}} + {{sheduleEvent.eventDate}}</ion-card-subtitle>
     </ion-card-header>
         <ion-card-content>
          {{sheduleEvent.userLastName}}
+         <ion-avatar slot="start" style="width: 72px;height: 72px;">
+          <img src={{sheduleEvent.eventUrlPhoto}}>
+        </ion-avatar>
         </ion-card-content>
-
   </ion-card>
+ -->
+  <ion-list >
+    <ion-item  *ngFor="let sheduleEvent of eventSheduleDetails">
+      <ion-avatar slot="start" style="width: 72px;height: 72px;">
+        <img [src]="sheduleEvent.eventUrlPhoto">
+      </ion-avatar>
+      <ion-label>
+        <h2 style="font-weight: bold;">Event: {{sheduleEvent.eventName}}</h2>
+        <h2 style="font-weight: bold;">Date:{{sheduleEvent.eventDate}}</h2>
+        <p>{{sheduleEvent.eventDesc}}</p>
+      </ion-label>
+    </ion-item>
+    </ion-list>
 
   
 </ion-content>

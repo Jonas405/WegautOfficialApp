@@ -104,7 +104,7 @@ export class EventsPage implements OnInit {
     })
   }
 
-  async scheduleEvent(eventId,eventDate){
+  async scheduleEvent(eventId,eventDate,eventTitle,eventDescp,eventUrlFile){
     console.log("shedule event" + eventId);
     console.log("event date " + eventDate);
     const modal = await this.modalCrtl.create({
@@ -112,7 +112,11 @@ export class EventsPage implements OnInit {
       componentProps:{
         'idUserFromStorage': this.idUserFromStorage,
         'eventId': eventId,
-        'eventDate': eventDate
+        'eventDate': eventDate,
+        'eventTitle': eventTitle,
+        'eventDescp': eventDescp,
+        'eventUrlFile':eventUrlFile
+
       }
     });
     await modal.present();

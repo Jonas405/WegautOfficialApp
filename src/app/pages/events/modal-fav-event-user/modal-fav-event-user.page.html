@@ -1,11 +1,14 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>modal-fav-event-user</ion-title>
-    <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
-      Close Modal
-   </ion-button>
+    <ion-title style="text-align: center;">Fav Events</ion-title>
+    <ion-buttons slot="primary">
+      <button ion-button icon-only (click)="closeScheduleModal()">
+        <ion-icon  slot="end" name="close"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content [fullscreen]="true">
 <ion-list>
