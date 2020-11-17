@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'modal-fav-event-user',
     loadChildren: () => import('./modal-fav-event-user/modal-fav-event-user.module').then( m => m.ModalFavEventUserPageModule)
+  },
+  {
+    path: 'modal-photo-event',
+    loadChildren: () => import('./modal-photo-event/modal-photo-event.module').then( m => m.ModalPhotoEventPageModule)
   }
 ];
 

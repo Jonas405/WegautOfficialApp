@@ -25,10 +25,10 @@ export class ModalProfileSettingsPage implements OnInit {
   userEmail: string;
   userPass: string;
   base64Image:string;
-
+  photoUpdate:number;
   userModel = new UserModel;
 
-  photoUpdate:number;
+  
 
 
   constructor(  private profileService: ProfileService,
@@ -91,6 +91,7 @@ closeScheduleModal(){
     alert("update successful");
     console.log(data);
     this.uploadImage();
+    this.closeScheduleModal();
   });
   }
 

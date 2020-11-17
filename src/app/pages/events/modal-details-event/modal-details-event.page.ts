@@ -8,6 +8,8 @@ import { Storage } from '@ionic/storage';
 import { EventLike } from 'src/app/models/schedule-user-event-models';
 import { ModalScheduleEventPage } from '../modal-schedule-event/modal-schedule-event.page';
 import { UserComment } from 'src/app/models/user-model';
+import { ModalPhotoEventPage } from '../modal-photo-event/modal-photo-event.page';
+import { EventPhoto } from 'src/app/models/event-model';
 
 @Component({
   selector: 'app-modal-details-event',
@@ -36,6 +38,9 @@ avatarSlide = {
   commentsEvent: EventComments[];
   commentUser = new UserComment;
 
+  eventPhotos: EventPhoto[];
+
+
 
   @Input() eventId;
   constructor(private modalCrtl: ModalController,
@@ -55,7 +60,16 @@ avatarSlide = {
         console.log(data);
       });
       this.getSponsorOnSelectedEvent();
+      this.getPhotoEvents();
       this.getCommentsEvent(this.eventId);
+  }
+
+  getPhotoEvents(){
+    this.eventService.getPhotoEvent(this.eventId)
+    .subscribe((data)=>{
+      this.eventPhotos = data;
+      console.log(data);
+    })
   }
 
   getSponsorOnSelectedEvent(){
@@ -194,8 +208,18 @@ avatarSlide = {
       await modal.present(); */
     }
 
-    addPhotoToEvent(){
-      console.log("add photo to event");
+   
+    async addPhotoToEvent(){
+
+      const modal = await this.modalCrtl.create({
+        component: ModalPhotoEventPage,
+        componentProps:{
+         'eventId': this.eventId,
+         'userId': this.idUserFromStorage
+        }
+      });
+  
+      await modal.present();
     }
 
 

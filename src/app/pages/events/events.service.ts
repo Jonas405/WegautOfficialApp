@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { EventComments, EventDetails,EventSheduleDetails, SelectedEventDetails} from 'src/app/interfaces/event';
-import { EventModel } from 'src/app/models/event-model';
+import { EventModel, EventPhoto } from 'src/app/models/event-model';
 import { EventLike, ScheduleUserEvent } from 'src/app/models/schedule-user-event-models';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { Observable } from 'rxjs';
@@ -72,6 +72,14 @@ export class EventsService {
     return this.http.post(`${this.url}PostCommentEvent.php`, userComment,  {responseType: 'text'} );
   }
 
+  postPhotoEvent(photoEvent: EventPhoto){
+    return this.http.post(`${this.url}PostNewPhotoEventUser.php`, photoEvent,  {responseType: 'text'} );
+  }
+
+  getPhotoEvent(eventId){
+    let params1 = new HttpParams().set('eventId', eventId);
+    return this.http.get<EventPhoto[]>(`${this.url}GetPhotosEvent.php`,{params: params1})
+  }
 
 /* 
   //upload image selected or take photo

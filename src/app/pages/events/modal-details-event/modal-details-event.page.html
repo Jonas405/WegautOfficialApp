@@ -175,7 +175,7 @@
               </p>
           </div>
 
- <!--          <ion-header [translucent]="true">
+           <ion-header [translucent]="true">
             <ion-toolbar>
               <ion-buttons slot="secondary">
               </ion-buttons>
@@ -187,17 +187,16 @@
               </ion-buttons>
             </ion-toolbar>
           </ion-header>
- -->
+
           
-<!-- 
-Image gallery need relation images evento to event from users
+
           <div class="detail-horizontal-scroll ion-margin-top ion-margin-bottom">
-              <div class="img-gallery margin" *ngFor="let image of (place | async)?.images ,let i = index">
-                  <img [src]="image" (click)="openImageViewer(i)" />
+              <div class="img-gallery margin" *ngFor="let image of eventPhotos,let i = index">
+                  <img [src]="image.urlPhoto" (click)="openImageViewer(i)" />
               </div>
           </div>
 
-           -->
+          
       </ion-col>
       <ion-col size-lg="4" size-md="12" size-sm="12" size="12">
           <!--*********** Contact  ***********-->

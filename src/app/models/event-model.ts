@@ -25,3 +25,13 @@ export class EventAddModal {
     sponsor?: [];
     eventLikes?: string;
 }
+
+export class EventPhoto{
+
+    EventPhotoId?: string;
+    eventId: string;
+    userId: string;
+    descrip: string;
+    dateUpload: string;
+    urlPhoto: string;
+}
