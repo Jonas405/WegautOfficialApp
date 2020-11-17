@@ -8,6 +8,7 @@ import { ModalScheduleEventPage } from '../events/modal-schedule-event/modal-sch
 import { ModalDetailsEventPage } from '../events/modal-details-event/modal-details-event.page';
 import { ModalFavEventUserPage } from '../events/modal-fav-event-user/modal-fav-event-user.page';
 import { ModalFollowersDetailsPage } from './modal-followers-details/modal-followers-details.page';
+import { ModalProfileSettingsPage } from './modal-profile-settings/modal-profile-settings.page';
 
 @Component({
   selector: 'app-profile',
@@ -155,8 +156,18 @@ async scheduleEvent(userId){
     await modal.present();
   }
 
+  async settingsProfile(){
+    
+    const modal = await this.modalCrtl.create({
+      component: ModalProfileSettingsPage
+    });
+
+    await modal.present();
+  }
+
   doRefresh(event){
     console.log("do refresh")
+    this.userProfilePicture = null;
       this.ngOnInit();
       event.target.complete();
   }

@@ -16,6 +16,14 @@ import { UserComment } from 'src/app/models/user-model';
 })
 export class ModalDetailsEventPage implements OnInit {
 
+    //**** toolbar for hide and show ****/
+    showToolbar = false;
+    showColor = false;
+    showTitle = false;
+    transition:boolean = false;
+      
+  
+
 avatarSlide = {
   slidesPerView: 3.5
 }
@@ -152,6 +160,43 @@ avatarSlide = {
   closeEventDetail(){
     this.modalCrtl.dismiss();
   }
+
+
+  onScroll($event: CustomEvent) {
+    if ($event && $event.detail && $event.detail.scrollTop) {
+      const scrollTop = $event.detail.scrollTop;
+      this.transition = true;
+      this.showToolbar = scrollTop >= 160;
+      //console.log("showToolbar="+this.showToolbar);
+      this.showTitle = scrollTop >= 160;
+      //console.log("showTitle="+this.showTitle);
+    }else{
+      this.transition = false;
+    }
+  }
+
+  doRefresh(event){
+    console.log("do refresh")
+      this.ngOnInit();
+      event.target.complete();
+  }
+   
+
+    async openImageViewer(image){
+    /*   console.log("this is the view details"+sponsorUserId);
+      const modal = await this.modalCrtl.create({
+        component: ModalDetailsProfilePage,
+        componentProps:{
+         'sponsorUserId': sponsorUserId
+        }
+      });
+  
+      await modal.present(); */
+    }
+
+    addPhotoToEvent(){
+      console.log("add photo to event");
+    }
 
 
 

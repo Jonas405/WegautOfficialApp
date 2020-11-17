@@ -9,6 +9,8 @@ export class UserModel {
     userPass?:    string;
     userUrlProfilePicture?: string;
     userLevel?: string;
+    userAbout?: string;
+  
 }
 
 export class UserFollow{

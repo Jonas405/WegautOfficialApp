@@ -15,6 +15,7 @@ import { FileTransfer} from '@ionic-native/file-transfer/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { CountdownModule } from 'ngx-countdown';
 import {AutosizeModule} from 'ngx-autosize';
+import { CacheModule } from "ionic-cache";
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {AutosizeModule} from 'ngx-autosize';
             AppRoutingModule,
             HttpClientModule,
             CountdownModule,
-            AutosizeModule
+            AutosizeModule,
+            CacheModule
             ],
   providers: [
     StatusBar,

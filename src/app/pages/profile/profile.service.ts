@@ -50,4 +50,8 @@ export class ProfileService {
     return this.http.get(`${this.url}GetCheckUserFollow.php`,{params: params1})
   }
 
+  postUpdateProfile(updateProfile: UserModel){
+    return this.http.post(`${this.url}PostUpdateProfile.php`, updateProfile,  {responseType: 'text'} );
+  }
+
 }

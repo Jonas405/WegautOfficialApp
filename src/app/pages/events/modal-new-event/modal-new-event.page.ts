@@ -91,7 +91,6 @@ export class ModalNewEventPage implements OnInit {
 
   createEvent(){
     console.log(this.event);
-
     this.storage.get('idUserFromDb').then((val)=>{
       if(val != null ){
         console.log('Your id from db storage is ', val);
@@ -119,8 +118,6 @@ export class ModalNewEventPage implements OnInit {
         console.log("no id user storage! review")
       }
     })
-
-   
   }
   
   uploadImage(){

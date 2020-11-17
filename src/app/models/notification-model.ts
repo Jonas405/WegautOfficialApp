@@ -3,5 +3,6 @@ export class NotificationModel {
     notificationDesc?:       string;
     notificationUrlFile?:          string;
     idUser?: string;
+   
 
 }

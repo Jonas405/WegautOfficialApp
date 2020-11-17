@@ -1,16 +1,21 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>modal-follow-users</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar  color="tertiary">
+    <ion-buttons slot="start">
+      <ion-button>
+        <img  src="../../assets/logow.JPG" style="width: 30px;height: 30px;"/>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="secondary">
+    </ion-buttons>
+    <ion-title class="main-header4">Follow Users</ion-title>
   </ion-toolbar>
 </ion-header>
-
 
   <ion-content padding>
 
   
-    <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
-      Close Modal
-   </ion-button>
+
 
    <ion-list lines="none">
     <ion-item lines="none"  *ngFor="let user of usersProfile">
@@ -21,21 +26,24 @@
         <h2 style="font-weight: bold;">{{user.userName}} {{user.userLastName}}</h2>
         <p>{{user.userAbout}}</p>
       </ion-label>
-      <button  
+      <ion-button  class="round"
       (click)="followUser(user.userId)" 
        (click)="changeShowFollow(user)"
        ion-button icon-end item-end >
         <div  *ngIf="!user.userFollow; else followed">
           <p>Follow</p>
-          <ion-icon  name="add"></ion-icon>
         </div>
         <ng-template #followed>
           <p>Followed</p>
-          <ion-icon name="checkmark-circle"></ion-icon>
         </ng-template>
-      </button>
+      </ion-button>
     </ion-item>
     </ion-list>
   </ion-content>
 
+  <ion-footer>
+    <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
+      Close Modal
+   </ion-button>
+  </ion-footer>
 

@@ -7,9 +7,12 @@
       <form (ngSubmit)="login(fLogin)" #fLogin="ngForm">
         <ion-grid fixed>
 
-          <ion-row>
-            <ion-col>
-              <img src="/assets/avatars/av-1.png">
+          <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+              <h3>Welcome!</h3>
+              <div class="login-logo">
+                <img src="../../assets/logow.JPG" >
+              </div>
             </ion-col>
           </ion-row>
         
@@ -18,33 +21,59 @@
               
                 <ion-list>
                   
-                  <ion-item>
-                    <ion-label>Email</ion-label>
+                  <ion-item class="roundedInput8px margin-bottom-15 ">
+                    <ion-label>
+                      <ion-icon color="medium" name="mail-outline"></ion-icon>
+                    </ion-label>
                     <ion-input name="email"
                                 type="email"
+                                placeholder="Email"
                                 [(ngModel)]="user.userEmail"
                                 required></ion-input>
                   </ion-item>
 
-                  <ion-item>
-                    <ion-label>Password</ion-label>
-                    <ion-input name="password"
+                  <ion-item class="roundedInput8px margin-bottom-20">
+                    <ion-label>
+                      <ion-icon color="medium" name="lock-closed-outline"></ion-icon>
+                    </ion-label>
+                    <ion-input 
+                               placeholder="Password" [type]="showPassword ? 'text' : 'password'" clearOnEdit="false"
+                                name="password"
                                 type="password"
                                 [(ngModel)]="user.userPass"
-                                required></ion-input>
-                  </ion-item>
+                                required>
+                              </ion-input>
 
+                                <!-- ### Show/hide password ### -->
+            <div (click)="onPasswordToggle()" ion-button fill="clear" size="small">
+              <ion-icon slot="icon-only" color="medium" [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+            </div>
+                  </ion-item>
+                  <ion-text color="slightgray">
+                    <p class="ion-text-right main-header8">Forgot password?</p>
+                  </ion-text>
+                  <!-- ############ -->
+         
+                  
                 </ion-list>
             </ion-col>
           </ion-row>
 
           <ion-row>
             <ion-col>
-              <ion-button type="submit"
+              <ion-button 
+                          mode="ios" class="ion-margin-top" 
+                          expand="block"
+                          type="submit"
                           color="tertiary"
                           shape="round">
                 Login
               </ion-button>
+              <ion-text color="slightgray">
+                <h2 class="ion-text-center ion-margin-bottom main-header8">
+                  By clicking Sign up you agree to the following Terms ans Conditions without reservation
+                </h2>
+              </ion-text>
             </ion-col>
           </ion-row>
 
@@ -59,24 +88,14 @@
 
       
       <ion-grid fixed>
-
-            <ion-row>
-            <ion-col>
-                <h3>Welcome to Wegaut!</h3>
-            </ion-col>
-            </ion-row>
-            <ion-row>
-            <ion-col>
-                <ion-slides [options]="avatarSlide">
-                <ion-slide *ngFor="let avatar of avatars">
-                    <ion-img class="pick-avatar" 
-                            src="/assets/avatars/{{avatar.img}}"
-                            [ngClass]="{'pick-avatar-seleccionado':avatar.seleccionado}"
-                            (click)="selectedAvatar(avatar)"></ion-img>
-                </ion-slide>
-                </ion-slides>
-            </ion-col>
-            </ion-row>
+              <ion-row class="ion-justify-content-center">
+                <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+                  <div class="login-logo">
+                    <img src="../../assets/logow.JPG" >
+                  </div>
+                </ion-col>
+              </ion-row>
+           
         
             <form (ngSubmit)="registerUser(fRegister)" #fRegister="ngForm">
                 <ion-row>
@@ -93,59 +112,79 @@
                           </ion-item>
 
                           <ng-template *ngIf="user.userType === 'user';else enterprise">
-                            <div>you are ENTERPRISE</div>
+                            <div>you are an ENTERPRISE</div>
                           </ng-template>
 
                           <ng-template #enterprise>
-                            <ion-item>
-                              <ion-label>Brand</ion-label>
-                              <ion-input name="brand" 
+
+                            <ion-item class="roundedInput8px margin-bottom-15 ">
+                              <ion-label>
+                                <ion-icon color="medium" name="globe"></ion-icon>
+                              </ion-label>
+                              <ion-input  name="brand" 
+                                          placeholder="Brand"
                                           type="text"
                                           [(ngModel)]="user.userBrand"
                                           required></ion-input>
-                              </ion-item>
-
-                              <ion-item>
-                                <ion-label>TradeName</ion-label>
-                                <ion-input name="tradename" 
-                                            type="text"
-                                            [(ngModel)]="user.userTradeName"
-                                            required></ion-input>
-                                </ion-item>
+                            </ion-item>
                           </ng-template>
 
+                          <ion-item class="roundedInput8px margin-bottom-15 ">
+                            <ion-label>
+                              <ion-icon color="medium" name="mail-outline"></ion-icon>
+                            </ion-label>
+                            <ion-input  name="email" 
+                            placeholder="Email"
+                            type="email"
+                            [(ngModel)]="user.userEmail"
+                            required></ion-input>
+                          </ion-item>
 
-                            <ion-item>
-                            <ion-label>Email</ion-label>
-                            <ion-input name="email" 
-                                        type="email"
-                                        [(ngModel)]="user.userEmail"
-                                        required></ion-input>
-                            </ion-item>
 
-                            <ion-item>
-                            <ion-label>Nombre</ion-label>
+                          <ion-item class="roundedInput8px margin-bottom-15 ">
+                            <ion-label>
+                              <ion-icon color="medium" name="person"></ion-icon>
+                            </ion-label>
                             <ion-input name="nombre"
-                                        type="text"
-                                        [(ngModel)]="user.userName"
-                                        required></ion-input>
-                            </ion-item>
+                            placeholder="Name"
+                            type="text"
+                            [(ngModel)]="user.userName"
+                            required></ion-input>
+                          </ion-item>
 
-                            <ion-item>
-                              <ion-label>Last Name</ion-label>
-                              <ion-input name="lastName"
-                                          type="text"
-                                          [(ngModel)]="user.userLastName"
-                                          required></ion-input>
-                              </ion-item>
+                          <ion-item class="roundedInput8px margin-bottom-15 ">
+                            <ion-label>
+                              <ion-icon color="medium"  name="person-add"></ion-icon>
+                            </ion-label>
+                            <ion-input name="lastName"
+                            placeholder="Last Name"
+                            type="text"
+                            [(ngModel)]="user.userLastName"
+                            required></ion-input>
+                          </ion-item>
 
-                            <ion-item>
-                            <ion-label>Password</ion-label>
-                            <ion-input name="password"
+                          <ion-item class="roundedInput8px margin-bottom-20">
+                            <ion-label>
+                              <ion-icon color="medium" name="lock-closed-outline"></ion-icon>
+                            </ion-label>
+                            <ion-input 
+                                        name="password"
                                         type="password"
                                         [(ngModel)]="user.userPass"
-                                        required></ion-input>
-                            </ion-item>
+                                        required
+                                        placeholder="Password" 
+                                        [type]="showPassword ? 'text' : 'password'" 
+                                        clearOnEdit="false"
+                                        required>
+                                      </ion-input>
+        
+                                        <!-- ### Show/hide password ### -->
+                    <div (click)="onPasswordToggle()" ion-button fill="clear" size="small">
+                      <ion-icon slot="icon-only" color="medium" [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+                    </div>
+                          </ion-item>
+
+                    
 
                         </ion-list>
                     </ion-col>

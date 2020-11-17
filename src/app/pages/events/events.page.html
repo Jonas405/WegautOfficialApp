@@ -1,9 +1,14 @@
-<div class="post">
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar  color="tertiary">
+    <ion-buttons slot="start">
+      <ion-button>
+        <img  src="../../assets/logow.JPG" style="width: 30px;height: 30px;"/>
+      </ion-button>
+    </ion-buttons>
+
     <ion-buttons slot="secondary">
     </ion-buttons>
-    <ion-title>Events</ion-title>
+    <ion-title class="main-header4">Events</ion-title>
     <ion-buttons slot="primary">
       <ion-button  (click)="newEvent()" color="secondary">
         <ion-icon slot="icon-only" name="add"></ion-icon>
@@ -66,4 +71,4 @@
 </ion-content>
 
 
-</div>
+

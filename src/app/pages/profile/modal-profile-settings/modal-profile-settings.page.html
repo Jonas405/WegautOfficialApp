@@ -1,0 +1,135 @@
+<ion-header class="ion-no-border">
+
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-button>
+        <img  src="../../assets/logow.JPG" style="width: 30px;height: 30px;"/>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-buttons slot="primary">
+        <ion-button ion-button icon-only (click)="closeScheduleModal()">
+          <ion-icon  slot="end" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+    </ion-buttons>
+    
+  </ion-toolbar>
+
+</ion-header>
+<ion-content>
+  <ion-grid fixed class="ion-no-padding">
+      <ion-header  class="ion-no-border" collapse="condense">
+      
+        <ion-toolbar>
+          <ion-title color="orange" size="large">Profile</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+    <!-- <div class="logo-box">
+      <img src="https://pbs.twimg.com/profile_images/1148952014036054016/xxv7lLvp.jpg" alt="">
+    </div> -->
+
+    <div class="login-form">
+      <ion-text color="dark">
+        <h2 text-center class="ion-margin-bottom main-header7">
+            Update Profile Photo
+        </h2>
+    </ion-text>
+
+<!--     <ion-label position="floating">Event Title</ion-label>
+    <ion-textarea [(ngModel)]="event.titleEvent"></ion-textarea> -->
+  
+
+      <ion-list class="ion-margin-top ion-padding">
+
+       
+         
+          <div class="img-center" *ngIf="!base64Image; else profile">
+            <ion-avatar   fill="outline" style="width: 85px;height: 85px;">
+            <img  [src]="userProfilePicture">
+          </ion-avatar>
+          </div>
+          <ng-template #profile>
+            <ion-avatar  fill="outline" style="width: 85px;height: 85px;">
+            <img  [src]="base64Image">
+          </ion-avatar>
+          </ng-template>
+  
+
+        <ion-row>
+          <ion-col size="6">
+            <ion-button expand="full"
+                        shape="round"
+                        (click)="openCamera()">
+              <ion-icon slot="start" name="camera"></ion-icon>
+              Camera
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="full"
+                        shape="round"
+                        (click)="openGallery()">
+              <ion-icon slot="start" name="images"></ion-icon>
+              Gallery
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <!-- ############ -->
+        <ion-label position="floating">Name</ion-label>
+        <ion-item  class="roundedInput8px margin-bottom-10">
+          <ion-label>
+            <ion-icon name="person-outline" color="medium"></ion-icon>
+            </ion-label>
+          <ion-input  type="text"  [(ngModel)]="userModel.userName" [value]="userName" ></ion-input>
+        </ion-item>
+        <!-- ############ -->
+        <ion-label position="floating">About</ion-label>
+        <ion-item  class="roundedInput8px margin-bottom-10">
+          <ion-label>
+            <ion-icon name="information-circle" color="medium"></ion-icon>
+            </ion-label>
+          <ion-input type="text"  [(ngModel)]="userModel.userAbout"  [value]="userAbout"></ion-input>
+        </ion-item>
+        
+        <!-- ############ -->
+        <ion-label position="floating">Email</ion-label>
+        <ion-item  class="roundedInput8px margin-bottom-10">
+          <ion-label>
+            <ion-icon name="mail-outline" color="medium"></ion-icon>
+            </ion-label>
+          <ion-input type="text" [(ngModel)]="userModel.userEmail" [value]="userEmail" ></ion-input>
+        </ion-item>
+
+           <!-- ############ -->
+           <ion-label position="floating">Password</ion-label>
+           <ion-item  class="roundedInput8px margin-bottom-10">
+            <ion-label>
+              <ion-icon name="construct" color="medium"></ion-icon>
+              </ion-label>
+            <ion-input type="text" [(ngModel)]="userModel.userPass" [value]="userPass" ></ion-input>
+          </ion-item>
+      </ion-list>
+
+      <ion-button fill="outline" expand="block" class="ion-margin-top"  (click)="updateProfile()">
+        Update
+      </ion-button>
+
+      <ion-button fill="outline" expand="block" class="ion-margin-top"  (click)="logout()">
+        Signout
+      </ion-button>
+      
+          <ion-text color="dark">
+            <h2  class="ion-text-center ion-margin-bottom main-header8">
+                By clicking Sign up you agree to the following Terms ans Conditions without reservation
+            </h2>
+        </ion-text>
+    
+
+
+    </div>
+  </ion-grid>
+</ion-content>

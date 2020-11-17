@@ -1,6 +1,30 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title style="text-align: center;">Notifications</ion-title>
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-button>
+        <img  src="../../assets/logow.JPG" style="width: 30px;height: 30px;"/>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="main-header4">Notifications</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button class="badge-button" routerLink="/fire-signin" routerDirection="forward">
+        <ion-icon name="person-circle-outline" color="light">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+
+  <ion-toolbar color="tertiary">
+
+    <ion-grid fixed class="ion-no-padding">
+
+      <ion-row>
+        <ion-col>
+          <ion-searchbar color="" placeholder="Find users and brands"  (click)="findUsers()" search-icon="search-outline">
+          </ion-searchbar>
+        </ion-col>
+      </ion-row>  
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +35,7 @@
 
   
     <ion-content padding>
-     <ion-list lines="none">
+<!--      <ion-list lines="none">
       <ion-item lines="none"  *ngFor="let not of notificationDetails">
         <ion-avatar slot="start" style="width: 72px;height: 72px;">
           <img [src]="not.userPhoto" (click)="goToSponsorProfile(not.idUser)">
@@ -21,9 +45,21 @@
           <p>{{not.notificationDesc}}</p>
         </ion-label>
       </ion-item>
-      </ion-list>
+      </ion-list> -->
+
+
+      <ion-item *ngFor="let not of notificationDetails">
+        <ion-avatar slot="start">
+          <img [src]="not.userPhoto" (click)="goToSponsorProfile(not.idUser)">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{not.userName}} {{not.userLastName}}</h2>
+          <h3>{{not.notificationDesc}}</h3>
+        </ion-label>
+      </ion-item>
     </ion-content>
   
+    
   
   
 </ion-content>

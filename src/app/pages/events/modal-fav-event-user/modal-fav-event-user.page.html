@@ -1,14 +1,28 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title style="text-align: center;">Fav Events</ion-title>
-    <ion-buttons slot="primary">
-      <button ion-button icon-only (click)="closeScheduleModal()">
-        <ion-icon  slot="end" name="close"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-header class="ion-no-border">
 
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-button>
+        <img  src="../../assets/logow.JPG" style="width: 30px;height: 30px;"/>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="main-header4">
+    Fav Events
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-buttons slot="primary">
+        <ion-button ion-button icon-only (click)="closeScheduleModal()">
+          <ion-icon  slot="end" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+    </ion-buttons>
+    
+  </ion-toolbar>
+
+</ion-header>
 
 <ion-content [fullscreen]="true">
 <ion-list>

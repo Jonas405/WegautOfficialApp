@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { ModalController, NavController } from '@ionic/angular';
 import { NotificationDetails } from 'src/app/interfaces/notification';
 import { ModalDetailsProfilePage } from '../profile/modal-details-profile/modal-details-profile.page';
+import { ModalFollowUsersPage } from '../home/modal-follow-users/modal-follow-users.page';
 
 @Component({
   selector: 'app-notification',
@@ -52,6 +53,18 @@ export class NotificationPage implements OnInit {
 
     await modal.present();
   }
+
+  async findUsers(){
+    
+    const modal = await this.modalCrtl.create({
+      component: ModalFollowUsersPage
+    });
+
+    await modal.present();
+  }
+
+
+
 
   
   doRefresh(event){

@@ -1,10 +1,16 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title style="text-align: center;">Schedule Event</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-button>
+        <img  src="../../assets/logow.JPG" style="width: 30px;height: 30px;"/>
+      </ion-button>
+    </ion-buttons>
+    
+    <ion-title class="main-header4">Schedule Event</ion-title>
     <ion-buttons slot="primary">
-      <button ion-button icon-only (click)="closeScheduleModal()">
-        <ion-icon  slot="end" name="close"></ion-icon>
-      </button>
+      <ion-button (click)="closeScheduleModal()">
+        <ion-icon slot="end" name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,50 +19,39 @@
 <ion-content padding>
 
   <div *ngIf="eventId; else noDate">
-  <img class="image-post" src={{eventUrlFile}}/>
-   <h1 class="p2">{{eventTitle}}</h1>
-   <p class="p1">  {{eventDescp}}</p>
-   <p class="p1"> Date event: {{eventDate}}</p>
+  <ion-grid fixed class="ion-no-padding">
+
+    <!--*********** Title  ***********-->
   
+    <div class="travel_space1">
+        <ion-item lines="none">
+          
+    <ion-label text-wrap>
+                <h1 class="h1-center">{{eventTitle}}</h1>
+                <ion-text color="medium">
+                    <p class="p1"> {{eventDescp}}</p>
+                    <p class="p1"> {{eventDate}}</p>
+                </ion-text>
+            </ion-label>
+        </ion-item>
+    </div>
+  
+  </ion-grid> 
+  <img class="image-post" src={{eventUrlFile}}/>   
       <ion-grid>
       <ion-row>
       <ion-col class="timer" >
-          <p>{{dayD}}:</p>
-          <h6>D</h6>
-         </ion-col>
-  
-        <ion-col class="timer">
-          <p>{{hourD}}:</p>
-          <h6>H</h6>
-        </ion-col>
-  
-        <ion-col  class="timer">
-          <p>{{minuteD}}:</p>
-          <h6>M</h6>
-        </ion-col>
-  
-         <ion-col class="timer">
-          <p>{{secondD}}</p>
-          <h6>S</h6>
+          <p>Faltan solo: {{demo}}!</p>
          </ion-col>
         </ion-row>
       </ion-grid>
-     
     </div>
 
   
     <ng-template #noDate>
       <p> </p>
          </ng-template>
-      
-
-  <ion-button *ngIf="eventId; else noExits" (click)="postScheduleEvent(eventId)" color="secondary" expand="full">
-    Schedule event
-  </ion-button>
-
-  <ng-template #noExits>
- <p> </p>
-    </ng-template>
+    
   
 <!--   <ion-card *ngFor="let sheduleEvent of eventSheduleDetails">
     <ion-card-header>
@@ -71,6 +66,24 @@
         </ion-card-content>
   </ion-card>
  -->
+ <ion-header [translucent]="true">
+  <ion-toolbar>
+    <div *ngIf="eventId; else noExits">
+      <ion-buttons slot="secondary">
+      </ion-buttons>
+      <ion-title>My Schedules Events</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button (click)="postScheduleEvent(eventId)"  color="terciary">
+          <ion-icon slot="end" name="add"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+      <ng-template #noExits>
+        <p></p>
+           </ng-template>
+  </ion-toolbar>
+</ion-header>
+
   <ion-list >
     <ion-item  *ngFor="let sheduleEvent of eventSheduleDetails">
       <ion-avatar slot="start" style="width: 72px;height: 72px;">
@@ -86,3 +99,5 @@
 
   
 </ion-content>
+
+  

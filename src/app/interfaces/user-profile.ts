@@ -10,6 +10,8 @@ export interface UserProfile {
     userNickName?: string;
     userAbout?: string;
     userFollow?: boolean;
+    userEmail?: string;
+    userPass?: string;
     
 }
 

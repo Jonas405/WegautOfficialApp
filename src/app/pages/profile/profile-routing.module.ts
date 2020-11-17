@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'modal-followers-details',
     loadChildren: () => import('./modal-followers-details/modal-followers-details.module').then( m => m.ModalFollowersDetailsPageModule)
+  },
+  {
+    path: 'modal-profile-settings',
+    loadChildren: () => import('./modal-profile-settings/modal-profile-settings.module').then( m => m.ModalProfileSettingsPageModule)
   }
 ];
 

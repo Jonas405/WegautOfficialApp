@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-title style="text-align: center;">Event Details</ion-title>
       <ion-buttons slot="primary">
@@ -89,4 +89,156 @@
       </ion-card-content>
         </ion-card>
         
+</ion-content>
+ -->
+
+ <!-- <ion-content  no-padding fullscreen=true (ionScroll)="onScroll($event)" [scrollEvents]="true" [class.transition]="transition"> -->
+
+<ion-content *ngFor="let event of selectedEvent" fullscreen="true" (ionScroll)="onScroll($event)" [scrollEvents]="true" [class.transition]="transition">
+  
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  
+  <ion-header class="ion-no-border" slot="fixed">
+      <ion-toolbar class="first" [class.show-background]="showToolbar" [style.color]="'#572364'"> 
+        <ion-buttons slot="start">
+          <ion-button (click)="closeEventDetail()" >
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+
+          <ion-title color="light" class="main-header4">Detail</ion-title>
+
+          <ion-buttons color="light" slot="end">
+              <ion-button>
+                <ion-icon  *ngIf="!event.eventDate; else alreadyFav"
+                (click)="incrementLike(event)"
+                (click)="likeEvent(eventId)"
+              slot="start" name="heart-outline"
+            >
+            </ion-icon>
+            <ng-template #alreadyFav>
+              <ion-icon
+              (click)="incrementLike(event)"
+              (click)="likeEvent(eventId)"
+               slot="start" name="heart" [style.color]="'#EF3B51'"></ion-icon>
+            </ng-template>
+              </ion-button>
+          </ion-buttons>
+      </ion-toolbar>
+  </ion-header>
+
+
+
+  <!--*********** Image header  ***********-->
+  <div class="detail-header" [ngStyle]="{'background-image': 'url(' + event.eventPrincipalPhoto + ')'}">
+<!--     <img class="background-image" src={{event.eventPrincipalPhoto}}/> -->
+  </div>
+
+
+
+  <ion-grid fixed class="ion-no-padding">
+
+  <!--*********** Title  ***********-->
+
+  <div class="travel_space1">
+      <ion-item lines="none">
+        
+    <ion-icon (click)="scheduleEvent(eventId,selectedDateEvent)" slot="end" name="calendar"></ion-icon>
+          <ion-label text-wrap>
+              <h1 class="travel_header1 detail-name">{{event.eventTitle}}</h1>
+              <ion-text color="medium">
+                  <h2 class="travel_header3 detail-price"> {{event.eventDate}}</h2>
+              </ion-text>
+          </ion-label>
+      </ion-item>
+  </div>
+
+  <p>Organizado por:</p>
+  <ion-row>
+    <ion-col>
+      <ion-slides [options]="avatarSlide">
+      <ion-slide *ngFor="let sponsor of sponsorDetails">
+          <ion-img class="pick-avatar"  (click)="goToSponsorProfile(sponsor.sponsorUserId)"
+          src={{sponsor.sponsorUrlPhoto}}></ion-img>
+      </ion-slide>
+      </ion-slides>
+  </ion-col>
+
+      <ion-col size-lg="8" size-md="12" size-sm="12" size="12">
+          <!--*********** Description ***********-->
+          <div class="travel_space4">
+              <p>
+                  {{event.eventDescr}}
+              </p>
+          </div>
+
+ <!--          <ion-header [translucent]="true">
+            <ion-toolbar>
+              <ion-buttons slot="secondary">
+              </ion-buttons>
+              <ion-title>Event Galery</ion-title>
+              <ion-buttons type="submit"  slot="primary">
+                <ion-button (click)="addPhotoToEvent()" color="secondary">
+                  <ion-icon slot="icon-only" name="add"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+ -->
+          
+<!-- 
+Image gallery need relation images evento to event from users
+          <div class="detail-horizontal-scroll ion-margin-top ion-margin-bottom">
+              <div class="img-gallery margin" *ngFor="let image of (place | async)?.images ,let i = index">
+                  <img [src]="image" (click)="openImageViewer(i)" />
+              </div>
+          </div>
+
+           -->
+      </ion-col>
+      <ion-col size-lg="4" size-md="12" size-sm="12" size="12">
+          <!--*********** Contact  ***********-->
+
+          <div class=" ion-margin-bottom">
+            <ion-card>
+              <ion-header [translucent]="true">
+                <ion-toolbar>
+                  <ion-buttons slot="secondary">
+                  </ion-buttons>
+                  <ion-title>Comments</ion-title>
+                  <ion-buttons type="submit"  slot="primary">
+                    <ion-button (click)="addComment()" color="secondary">
+                      <ion-icon slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+    
+              <ion-card-content>
+                <ion-label position="floating">Your comment:</ion-label>
+                <ion-input  type="text" [(ngModel)]="commentUser.comment"> </ion-input>
+                <ion-list>
+                  <ion-item *ngFor="let comment of commentsEvent">
+                  
+                    <ion-avatar slot="start">
+                      <img src={{comment.userPhoto}}>
+                    </ion-avatar>
+                 
+                    <ion-label>
+                      <h2>{{comment.userName}}</h2>
+                      <textarea autosize>{{comment.comment}}</textarea>
+                    </ion-label>
+                
+                  </ion-item>
+                </ion-list>
+          </ion-card-content>
+            </ion-card>
+             
+          </div>
+      </ion-col>
+  </ion-row>          
+</ion-grid>
 </ion-content>

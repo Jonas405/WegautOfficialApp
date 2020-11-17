@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
 ];
 
   user : UserModel = new UserModel;
-
+  public showPassword: boolean = false;
   avatarSlide = {
     slidesPerView: 3.5
   }
@@ -61,6 +61,10 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
   //  this.slides.lockSwipes(true);
+  }
+
+  public onPasswordToggle(): void {
+    this.showPassword = !this.showPassword;
   }
 
   ionViewDidEnter() {

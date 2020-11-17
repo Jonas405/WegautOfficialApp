@@ -1,18 +1,22 @@
-<ion-header no-border>
-  <ion-toolbar> 
-    <ion-title>
-      New Event
-    </ion-title>
-
-    <ion-buttons slot="end">
-      <ion-button (click)="createEvent()"
-                  color="primary">
-        Share
+<ion-header class="ion-no-border">
+  <ion-toolbar  color="tertiary">
+    <ion-buttons slot="start">
+      <ion-button>
+        <img  src="../../assets/logow.JPG" style="width: 30px;height: 30px;"/>
       </ion-button>
     </ion-buttons>
 
+    <ion-buttons slot="secondary">
+    </ion-buttons>
+    <ion-title class="main-header4">New Event</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button  (click)="createEvent()" color="secondary">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content padding>
  
@@ -92,10 +96,6 @@
       </ion-button>
     </ion-col>
   </ion-row>
-
-  <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
-    Close
- </ion-button>
 <!--   <ion-row>
     <ion-col size="3" *ngFor="let image of tempImages">
       <ion-card>
@@ -105,4 +105,11 @@
   </ion-row> -->
 
 </ion-content>
+
+<ion-footer>
+  <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
+    Close 
+ </ion-button>
+</ion-footer>
+
 
