@@ -1,0 +1,43 @@
+
+.img-avatar{
+    width:150px;
+}
+
+.top-20{
+    margin-top: 20px;
+}
+:host.ion-page {
+    background-color: var(--ion-item-background);
+    --ion-background-color: var(--ion-item-background);
+}
+
+.img-logo{
+    width:60px;
+}
+
+ion-col {
+    text-align: center;
+  }
+
+.p1{ 
+    font-size: 12px;
+}
+
+
+.img-event{
+    display: flex;   flex-wrap: nowrap;
+   width: 200px;
+   height: 100px;
+}
+
+.ion-nowrap{
+    flex-wrap: nowrap
+}
+
+.round {
+    --width: 60px;
+    --height: 60px;
+    --vertical-align: middle;
+    --padding-start: 10px;
+    --padding-end: 10px;
+}

@@ -6,6 +6,7 @@ import { UserModel } from 'src/app/models/user-model';
 import { ProfileService } from '../profile.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Observable } from 'rxjs';
+import { b2bUserModel } from 'src/app/models/b2b-user-model';
 
 @Component({
   selector: 'app-modal-profile-settings',
@@ -14,19 +15,19 @@ import { Observable } from 'rxjs';
 })
 export class ModalProfileSettingsPage implements OnInit {
 
-  userStorageId: string;
-  userBrand: string;
-  userName: string;
-  userTradeName: string;
-  userProfilePicture: string;
-  userType: string;
-  userAbout: string;
-  userLevel: string;
-  userEmail: string;
-  userPass: string;
+  userId: string;
+  userEmail:       string;
+  userPass:       string;
+  userTlf:       string;
+  userName:       string;
+  userLastName:       string;
+  photoProfileUser:       string;
+  createAt:       string;
+  userAbout:       string;
   base64Image:string;
   photoUpdate:number;
-  userModel = new UserModel;
+  b2bUserModel = new b2bUserModel;
+  //userModel = new UserModel;
 
   
 
@@ -42,7 +43,7 @@ export class ModalProfileSettingsPage implements OnInit {
     this.storage.get('idUserFromDb').then((val)=>{
       if(val != null ){
         console.log('Your id from db storage is ', val);
-        this.userStorageId = val;
+        this.userId = val;
         this.getUserProfileInfo(val);
       }else{
         this.navCtrl.navigateRoot('/login');
@@ -54,20 +55,18 @@ export class ModalProfileSettingsPage implements OnInit {
     this.profileService.getUserProfileDetails(userId)
     .subscribe((data)=>{
     
-      console.log("profile user details userBrand" + data[0].userBrand);
+/*       console.log("profile user details userBrand" + data[0].userBrand);
       console.log("profile user details userName" + data[0].userName);
       console.log("profile user details userTradeName" + data[0].userTradeName);
       console.log("profile user details userProfilePicture" + data[0].userProfilePicture);
       console.log("profile user details userType" + data[0].userType);
       console.log("profile user details userType" + data[0].userAbout);
-
-      this.userBrand = data[0].userBrand;
+ */
       this.userName = data[0].userName;
-      this.userTradeName = data[0].userTradeName;
-      this.userProfilePicture = data[0].userProfilePicture;
-      this.userType = data[0].userType;
+      this.userLastName = data[0].userLastName;
+      this.userTlf = data[0].userTlf;
+      this.photoProfileUser = data[0].photoProfileUser;
       this.userAbout = data[0].userAbout;
-      this.userLevel = data[0].userLevel;
       this.userEmail = data[0].userEmail;
       this.userPass = data[0].userPass;
     
@@ -81,12 +80,12 @@ closeScheduleModal(){
   updateProfile(userUpdate){
   
   this.photoUpdate = Math.random();
-  this.userModel.userUrlProfilePicture = this.photoUpdate.toString();
+  this.b2bUserModel.photoProfileUser = this.photoUpdate.toString();
 
-  userUpdate = this.userModel;
-  this.userModel.userId = this.userStorageId;
-  console.log(this.userModel);
-  this.profileService.postUpdateProfile(this.userModel)
+  userUpdate = this.b2bUserModel;
+  this.b2bUserModel.userId = this.userId;
+  console.log(this.b2bUserModel);
+  this.profileService.postUpdateProfile(this.b2bUserModel)
   .subscribe(data=>{
     alert("update successful");
     console.log(data);
@@ -145,11 +144,11 @@ closeScheduleModal(){
     if(this.base64Image != undefined){
       console.log(this.base64Image);
 
-      let url = 'https://domappssuiteservices.com/Wegaut2020/WegautAppWebServices/PostUpdateImageProfile.php';
+      let url = 'https://domappssuiteservices.com/B2B/WebServices/PostUpdateImageProfile.php';
       let postData = new FormData();
       postData.append('file', this.base64Image);
-      postData.append('userId',this.userStorageId);
-      postData.append('url', this.userModel.userUrlProfilePicture);
+      postData.append('userId',this.userId);
+      postData.append('url', this.b2bUserModel.photoProfileUser);
       let data: Observable<any> = this.http.post(url,postData);
       data.subscribe((result)=>{
         console.log(result);

@@ -1,115 +1,84 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar  color="tertiary">
+<ion-header>
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
       <ion-button>
         <img  src="../../assets/logow.JPG" style="width: 30px;height: 30px;"/>
       </ion-button>
     </ion-buttons>
-
-    <ion-buttons slot="secondary">
-    </ion-buttons>
-    <ion-title class="main-header4">New Event</ion-title>
-    <ion-buttons slot="primary">
-      <ion-button  (click)="createEvent()" color="secondary">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
+    <ion-title class="main-header4">Agregar al grupo</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button class="badge-button" routerLink="/fire-signin" routerDirection="forward">
+        <ion-icon name="person-circle-outline" color="light">
+        </ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
+  </ion-toolbar>
+
+  <ion-toolbar color="tertiary">
+
+    <ion-grid fixed class="ion-no-padding">
+
+      <ion-row>
+      
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Nombre del grupo</ion-label>
+            <ion-input  [(ngModel)]="groupName"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>  
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-<ion-content padding>
- 
-
- 
-
-  <ion-list>
-    
-    <ion-item>
-      <ion-label position="floating">Event Title</ion-label>
-      <ion-textarea [(ngModel)]="event.titleEvent"></ion-textarea>
-
-      <ion-label position="floating">Event Detail</ion-label>
-      <ion-textarea [(ngModel)]="event.descripEvent"></ion-textarea>
-
-      <ion-label position="floating">Event Date</ion-label>
-      <ion-datetime
-      [(ngModel)]="event.dateEvent"
-      min="2019-01-01"
-      max="2025-12-31">
-    </ion-datetime>
-
-    <ion-label position="floating">Event Location</ion-label>
-    <ion-textarea [(ngModel)]="event.eventLocation"></ion-textarea>
-
-    
-    <ion-item>
-      <ion-label position="floating">Event Category</ion-label>
-      <ion-select [(ngModel)]="event.eventCategory" okText="Okay!">
-        <ion-select-option value="music">Music</ion-select-option>
-        <ion-select-option value="racing">Racing</ion-select-option>
-        <ion-select-option value="concert">Concert</ion-select-option>
-        <ion-select-option value="movie">Movie</ion-select-option>
-      </ion-select>
-    </ion-item>
-      
-    <ion-item>
-      <ion-label position="floating">Event Type</ion-label>
-      <ion-select [(ngModel)]="event.eventType" okText="Okay!">
-        <ion-select-option value="public">Public</ion-select-option>
-        <ion-select-option value="private">Private</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Event Sponsor</ion-label>
-      <ion-select [(ngModel)]="event.sponsor"  multiple="true" okText="Okay!">
-        <ion-select-option  *ngFor= "let l of sponsorAvailable" value ='{{ l.userBrand}}'>{{ l.userBrand}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-      <ion-label position="floating">Event Web Page</ion-label>
-      <ion-textarea [(ngModel)]="event.urlWebPageEvent"></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-    <ion-label position="floating">Event Cover</ion-label>
-    <img [src]="base64Image"/>
-  </ion-item>
-
-  </ion-list>
   
-  <ion-row>
-    <ion-col size="6">
-      <ion-button expand="full"
-                  shape="round"
-                  (click)="openCamera()">
-        <ion-icon slot="start" name="camera"></ion-icon>
-        Camera
-      </ion-button>
-    </ion-col>
-    <ion-col size="6">
-      <ion-button expand="full"
-                  shape="round"
-                  (click)="openGallery()">
-        <ion-icon slot="start" name="images"></ion-icon>
-        Gallery
-      </ion-button>
-    </ion-col>
-  </ion-row>
-<!--   <ion-row>
-    <ion-col size="3" *ngFor="let image of tempImages">
-      <ion-card>
-        <img [src]="image | imageSanitizer">
-      </ion-card>
-    </ion-col>
-  </ion-row> -->
+    <ion-content padding>
+<!--      <ion-list lines="none">
+      <ion-item lines="none"  *ngFor="let not of notificationDetails">
+        <ion-avatar slot="start" style="width: 72px;height: 72px;">
+          <img [src]="not.userPhoto" (click)="goToSponsorProfile(not.idUser)">
+        </ion-avatar>
+        <ion-label>
+          <h2 style="font-weight: bold;">{{not.userName}} {{not.userLastName}}</h2>
+          <p>{{not.notificationDesc}}</p>
+        </ion-label>
+      </ion-item>
+      </ion-list> -->
+
+      <ion-list lines="none">
+        <ion-item lines="none"  *ngFor="let user of userProfileContacts">
+          <ion-avatar slot="start" style="width: 72px;height: 72px;">
+            <img [src]="user.photoProfileUser">
+          </ion-avatar>
+          <ion-label>
+            <h2 style="font-weight: bold;">{{user.userName}} {{user.userLastName}}</h2>
+            <p>{{user.userAbout}}</p>
+          </ion-label>
+          <ion-button  class="round"
+          (click)="addContact(user.userId)" 
+           (click)="changeShowFollow(user)"
+           ion-button icon-end item-end >
+            <div  *ngIf="!user.userFollow; else followed">
+              <p>Agregar</p>
+            </div>
+            <ng-template #followed>
+              <p>Agregado</p>
+            </ng-template>
+          </ion-button>
+        </ion-item>
+        </ion-list>
+    </ion-content>
 
 </ion-content>
 
 <ion-footer>
-  <ion-button (click)="closeScheduleModal()" color="secondary" expand="full">
-    Close 
+  <ion-button (click)="createGroup()" color="secondary" expand="full">
+    Crear Grupo!
  </ion-button>
 </ion-footer>
-
 

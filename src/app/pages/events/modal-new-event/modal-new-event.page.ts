@@ -9,6 +9,11 @@ import { Storage } from '@ionic/storage';
 import { UserSponsor } from 'src/app/interfaces/userSponsor';
 import { NotificationService } from '../../notification/notification.service';
 import { NotificationModel } from 'src/app/models/notification-model';
+import { NotificationDetails } from 'src/app/interfaces/notification';
+import { b2bUserModel } from 'src/app/models/b2b-user-model';
+import { ProfileService } from '../../profile/profile.service';
+import { ModalFollowUsersPage } from '../../home/modal-follow-users/modal-follow-users.page';
+import { b2bCreateGroupModel } from 'src/app/models/b2b-create-group-model';
 
 declare var window: any;
 
@@ -19,161 +24,122 @@ declare var window: any;
 })
 export class ModalNewEventPage implements OnInit {
 
-  tempImages: string[] = [];
-  event : EventModel = new EventModel;
-  base64Image:string;
-  addModalEvent= new EventAddModal;
+  userStorageId: string;
+  notificationDetails: NotificationDetails[];
+  userProfileContacts: b2bUserModel[];
 
-  sponsorAvailable: UserSponsor[];
-  userSponsor: UserSponsor;
-  idUserStorage: string;
-  constructor( private http: HttpClient,
-               private modalCtrl: ModalController,
-               private eventService: EventsService,
-               private camera:Camera,
-               private storage: Storage,
-               private navCtrl: NavController,
-               private notificationService: NotificationService) {
+  lstUserGroup = [];
+  groupName;
+  b2bCreateGroupModel = new b2bCreateGroupModel();
+  
+  constructor( private notificationService: NotificationService,
+    private profileService: ProfileService,
+    private storage: Storage,
+    private navCtrl: NavController,
+    private modalCrtl: ModalController) {
      }
 
 
-  ngOnInit() {
-    console.log("user storage" + this.storage.get('idUserFromDb'));
-    this.eventService.getAllUserSponsor('enterprise');
+     ngOnInit() {
+      this.storage.get('idUserFromDb').then((val)=>{
+        if(val != null ){
+          console.log('Your id from db storage is ', val);
+          this.userStorageId = val;
+          this.getUserProfileContacts(val);
+        //  this.getNotifications(val);
+        }else{
+          this.navCtrl.navigateRoot('/login');
+        }
+      })
+    }
+  
+    getUserProfileContacts(userId){
+      this.profileService.getUserContacts(userId)
+      .subscribe((data)=>{
+        this.userProfileContacts = data;
+        console.log(data);
+      })
+    }
+    
+    
+    async findUsers(){
+      
+      const modal = await this.modalCrtl.create({
+        component: ModalFollowUsersPage
+      });
+  
+      await modal.present();
+    }
+  
+  
+    //-------------------
+    getNotifications(idUser){
+      this.notificationService.getNotificationUser(idUser)
+      .subscribe((data)=>{
+        this.notificationDetails = data;
+        console.log(data);
+      })
+    }
+        
+    doRefresh(event){
+      console.log("do refresh")
+        this.ngOnInit();
+        event.target.complete();
+    }
 
-    this.eventService.getAllUserSponsor('enterprise').subscribe((data: UserSponsor[])=>{
-    this.sponsorAvailable = data;
-      console.log(this.sponsorAvailable);
-    })
+    addContact(userIdDestiny){
 
-  }
+      this.lstUserGroup.push(userIdDestiny);
+      console.log(this.lstUserGroup);
+  /* 
+      this.storage.get('idUserFromDb').then((val)=>{
+        if(val != null ){
+          console.log('Your id from db storage is home ', val);
+          console.log(userIdDestiny)
+          this.b2bAddContact.id_user_destiny = userIdDestiny;
+          this.b2bAddContact.id_user_origin = val;
+          console.log(this.b2bAddContact);
+          this.notificationService.postAddNewContact(this.b2bAddContact)
+          .subscribe(data=>{
+            console.log(data);   
+          })
+        }else{
+          this.navCtrl.navigateRoot('/login');
+        }
+      }) */
+  
+    }
 
-  closeScheduleModal(){
-    this.modalCtrl.dismiss();
-  }
+    changeShowFollow(user){
+      user.userFollow = true;
+    }
+     
+    createGroup(){
 
-  openCamera(){
-    const options: CameraOptions = {
-      quality: 60,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true,
-     // sourceType: this.camera.PictureSourceType.CAMERA
-    };
+    
 
-    this.camera.getPicture(options).then((imageData)=>{
-      this.base64Image = 'data:image/jpeg;base64,'+imageData;
-    }, (err)=>{
-      //handle error
-    });
-   // this.processingImage(options);
-  }
 
-  openGallery(){
+      let date: Date = new Date();  
+      this.lstUserGroup.push(this.userStorageId);
+      console.log(this.lstUserGroup);
+      this.b2bCreateGroupModel.users_id = this.lstUserGroup;
 
-    const options: CameraOptions = {
-      quality: 60,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-    };
+      //print json converted from array 
 
-    this.camera.getPicture(options).then((imageData)=>{
-      this.base64Image = 'data:image/jpeg;base64,'+imageData;
-    }, (err)=>{
-      //handle error
-    });
-   // this.processingImage(options);
-  }
 
-  createEvent(){
-    console.log(this.event);
-    this.storage.get('idUserFromDb').then((val)=>{
-      if(val != null ){
-        console.log('Your id from db storage is ', val);
-        this.event.eventUserId = val;
-        this.idUserStorage = val;
-        if(this.event != undefined){
-          if(this.event.titleEvent != undefined 
-            && this.event.descripEvent != undefined  
-            && this.event.dateEvent != undefined  
-            && this.event.eventType != undefined  
-            && this.event.eventCategory != undefined  ){ 
-              this.eventService.postNewEvent(this.event)
-              .subscribe(data=>{
-                console.log(data);
-                this.uploadImage();
-            }); 
-         }else{
-            alert("Is mandatory all fields for create new event");
-          }
-            }else{
-              alert("Is mandatory all fields for create new event");
-          }
-      }else{
-        this.navCtrl.navigateRoot('/login');
-        console.log("no id user storage! review")
-      }
-    })
+      this.b2bCreateGroupModel.created_at = date.toDateString();
+      this.b2bCreateGroupModel.name = this.groupName;
+
+      this.notificationService.postAddNewGroup
+      this.notificationService.postAddNewGroup(this.b2bCreateGroupModel)
+      .subscribe(data=>{
+        console.log(data);   
+        console.log(this.b2bCreateGroupModel);
+      })
+  
+      this.modalCrtl.dismiss();
+    }
+  
+  
   }
   
-  uploadImage(){
-
-    let url = 'https://domappssuiteservices.com/Wegaut2020/WegautAppWebServices/PostNewEventImg.php';
-    let postData = new FormData();
-    postData.append('file', this.base64Image);
-    postData.append('eventTitle',this.event.titleEvent);
-    postData.append('eventDate',this.event.dateEvent);
-    let data: Observable<any> = this.http.post(url,postData);
-    data.subscribe((result)=>{
-      console.log(result);
-      
-      this.addModalEvent.title = this.event.titleEvent;
-      this.addModalEvent.descrip = this.event.descripEvent;
-      this.addModalEvent.date = this.event.dateEvent;
-      this.addModalEvent.eventUrlFile = this.base64Image;
-      this.postNotification(this.addModalEvent.eventUrlFile);
-      this.modalCtrl.dismiss(this.addModalEvent);
-    });
-    
-  }
-
-
-  postNotification(urlFile){
-    
-    let date: Date = new Date();
-    let notification= new NotificationModel;
-    notification.idUser = this.idUserStorage;
-    notification.notificationDate = date;
-    notification.notificationDesc = "new event created";
-    notification.notificationUrlFile = urlFile;
-
-    this.notificationService.postNotification(notification)
-    .subscribe(data=>{
-      console.log(data);
-  }); 
-  }
-
-/*   processingImage(options: CameraOptions){
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      const img = window.Ionic.WebView.convertFileSrc(imageData);
-
-      //upload image server
-      this.eventService.uploadImage(imageData);
-
-      console.log(img);
-      this.tempImages.push(img);
-     }, (err) => {
-      // Handle error
-     });
-  } */
-
-
-
-
-}

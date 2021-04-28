@@ -8,7 +8,7 @@
 
     <ion-buttons slot="secondary">
     </ion-buttons>
-    <ion-title class="main-header4">Follow Users</ion-title>
+    <ion-title class="main-header4">Agregar Contactos!</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,21 +20,21 @@
    <ion-list lines="none">
     <ion-item lines="none"  *ngFor="let user of usersProfile">
       <ion-avatar slot="start" style="width: 72px;height: 72px;">
-        <img [src]="user.userProfilePicture" (click)="goToSponsorProfile(user.userId)">
+        <img [src]="user.photoProfileUser" (click)="goToSponsorProfile(user.userId)">
       </ion-avatar>
       <ion-label>
         <h2 style="font-weight: bold;">{{user.userName}} {{user.userLastName}}</h2>
         <p>{{user.userAbout}}</p>
       </ion-label>
       <ion-button  class="round"
-      (click)="followUser(user.userId)" 
+      (click)="addContact(user.userId)" 
        (click)="changeShowFollow(user)"
        ion-button icon-end item-end >
         <div  *ngIf="!user.userFollow; else followed">
-          <p>Follow</p>
+          <p>Agregar</p>
         </div>
         <ng-template #followed>
-          <p>Followed</p>
+          <p>Agregado</p>
         </ng-template>
       </ion-button>
     </ion-item>

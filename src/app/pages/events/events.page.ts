@@ -8,6 +8,7 @@ import { ModalDetailsEventPage } from './modal-details-event/modal-details-event
 import { ModalNewEventPage } from './modal-new-event/modal-new-event.page';
 import { ModalScheduleEventPage } from './modal-schedule-event/modal-schedule-event.page';
 import { Storage } from '@ionic/storage';
+import { b2bCreateGroupModel } from 'src/app/models/b2b-create-group-model';
 
 @Component({
   selector: 'app-events',
@@ -18,12 +19,10 @@ export class EventsPage implements OnInit {
   
   @ViewChild('favIcon') favicon:ElementRef;
 
-  eventDetails: EventDetails[];
-  enable = true;
-  lstEvents = [];
-  eventLike = new EventLike;
-  addEventToList = new EventAddModal;
+ 
   idUserFromStorage: string;
+  myGroups: b2bCreateGroupModel[];
+
 
   constructor(private eventService: EventsService,
               private modalCrtl: ModalController,
@@ -33,64 +32,9 @@ export class EventsPage implements OnInit {
 
 
   ngOnInit() {
-    this.nextEvents();
+ 
    // this. getEventsDetails();
    this.getUserIdFromStorage();
-  }
-
-  recharge(event){
-    this.nextEvents(event,true);
-    this.enable = true;
-    this.eventDetails = [];
-  }
-
-  nextEvents(event?, pull: boolean = false){
-    this.eventService.getEventsDetails(pull)
-      .subscribe((data: EventDetails[])=>{
-        console.log(data);
-        this.eventDetails = data;
-        if(this.eventDetails != null){
-          for(let i = 0; i < this.eventDetails.length; i++){
-            var obj = this.eventDetails[i];
-            console.log(obj);
-            this.lstEvents.push(obj);
-         }
-        }
-        if(event){
-          event.target.complete();
-          if(this.eventDetails == null){
-            this.enable = false
-          }
-        }
-      });
-  }
-
-  incrementLike(event){
-    event.userFaveDate = true; 
-    console.log(event);
-    var x = event.eventLikes 
-    var y : number = +x;
-    console.log(y);
-    event.eventLikes = y + 1;
-    console.log(event.eventLikes);
-   }
-  
-  likeEvent(eventId){
-
-    this.storage.get('idUserFromDb').then((val)=>{
-      if(val != null ){
-        console.log('Your id from db storage is home ', val);
-        this.eventLike.eventId = eventId;
-        this.eventLike.userId = val;
-        console.log("like event" + this.eventLike.eventId);
-        this.eventService.postNewLikeEvent(this.eventLike)
-        .subscribe(data=>{
-          console.log(data);   
-        })
-      }else{
-        this.navCtrl.navigateRoot('/login');
-      }
-    })
   }
 
   getUserIdFromStorage(){
@@ -98,31 +42,34 @@ export class EventsPage implements OnInit {
       if(val != null ){
         console.log('Your id from db storage is home ', val);
        this.idUserFromStorage = val;
+       this.getMyGroups(val);
       }else{
         this.navCtrl.navigateRoot('/login');
       }
     })
   }
 
-  async scheduleEvent(eventId,eventDate,eventTitle,eventDescp,eventUrlFile){
-    console.log("shedule event" + eventId);
-    console.log("event date " + eventDate);
+  getMyGroups(myUserId){
+    this.eventService.getMyGroups(myUserId)
+    .subscribe((data)=>{
+      this.myGroups = data;
+      console.log(data);
+    });
+  }
+
+  async openChatRoom(chatRoomId, nameRoom){
+    console.log("chat room id" + chatRoomId);
     const modal = await this.modalCrtl.create({
       component: ModalScheduleEventPage,
       componentProps:{
-        'idUserFromStorage': this.idUserFromStorage,
-        'eventId': eventId,
-        'eventDate': eventDate,
-        'eventTitle': eventTitle,
-        'eventDescp': eventDescp,
-        'eventUrlFile':eventUrlFile
-
+        'chatRoomId': chatRoomId,
+        'nameRoom': nameRoom
       }
     });
     await modal.present();
   }
 
-  async newEvent(){
+  async newGroup(){
     const modal = await this.modalCrtl.create({
       component: ModalNewEventPage
       //,
@@ -143,9 +90,9 @@ export class EventsPage implements OnInit {
           && data.data.date != undefined  
           && data.data.eventUrlFile != undefined  
           && data.data.title != undefined  ){
-         this.lstEvents.unshift(data.data);
+       //  this.lstEvents.unshift(data.data);
          console.log("imprimiendo la lista");
-         console.log(this.lstEvents);
+        // console.log(this.lstEvents);
        }
       }
     });
@@ -166,15 +113,4 @@ export class EventsPage implements OnInit {
     await modal.present();
   }
 
-
-
-  
-
-/*   getEventsDetails(){
-    this.eventService.getEventsDetails().subscribe((data: EventDetails[])=>{
-      this.eventDetails = data;
-      console.log(this.eventDetails);
-    })
-  }
- */
 }

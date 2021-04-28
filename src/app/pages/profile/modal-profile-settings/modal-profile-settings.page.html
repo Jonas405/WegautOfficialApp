@@ -49,7 +49,7 @@
          
           <div class="img-center" *ngIf="!base64Image; else profile">
             <ion-avatar   fill="outline" style="width: 85px;height: 85px;">
-            <img  [src]="userProfilePicture">
+            <img  [src]="photoProfileUser">
           </ion-avatar>
           </div>
           <ng-template #profile>
@@ -84,7 +84,7 @@
           <ion-label>
             <ion-icon name="person-outline" color="medium"></ion-icon>
             </ion-label>
-          <ion-input  type="text"  [(ngModel)]="userModel.userName" [value]="userName" ></ion-input>
+          <ion-input  type="text"  [(ngModel)]="b2bUserModel.userName" [value]="userName" ></ion-input>
         </ion-item>
         <!-- ############ -->
         <ion-label position="floating">About</ion-label>
@@ -92,7 +92,7 @@
           <ion-label>
             <ion-icon name="information-circle" color="medium"></ion-icon>
             </ion-label>
-          <ion-input type="text"  [(ngModel)]="userModel.userAbout"  [value]="userAbout"></ion-input>
+          <ion-input type="text"  [(ngModel)]="b2bUserModel.userAbout"  [value]="userAbout"></ion-input>
         </ion-item>
         
         <!-- ############ -->
@@ -101,7 +101,7 @@
           <ion-label>
             <ion-icon name="mail-outline" color="medium"></ion-icon>
             </ion-label>
-          <ion-input type="text" [(ngModel)]="userModel.userEmail" [value]="userEmail" ></ion-input>
+          <ion-input type="text" [(ngModel)]="b2bUserModel.userEmail" [value]="userEmail" ></ion-input>
         </ion-item>
 
            <!-- ############ -->
@@ -110,7 +110,7 @@
             <ion-label>
               <ion-icon name="construct" color="medium"></ion-icon>
               </ion-label>
-            <ion-input type="text" [(ngModel)]="userModel.userPass" [value]="userPass" ></ion-input>
+            <ion-input type="text" [(ngModel)]="b2bUserModel.userPass" [value]="userPass" ></ion-input>
           </ion-item>
       </ion-list>
 

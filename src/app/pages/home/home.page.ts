@@ -7,6 +7,9 @@ import { CountdownComponent } from 'ngx-countdown';
 import { HomeService } from './home.service';
 import { ModalFollowUsersPage } from './modal-follow-users/modal-follow-users.page';
 import { ModalDetailsEventPage } from '../events/modal-details-event/modal-details-event.page';
+import { NotificationService } from '../notification/notification.service';
+import { ProfileService } from '../profile/profile.service';
+import { b2bUserModel } from 'src/app/models/b2b-user-model';
 
 
 @Component({
@@ -20,8 +23,12 @@ export class HomePage {
 
   eventSheduleDetails : EventSheduleDetails[];
   //demo: any;
+  userStorageId: string;
+  userProfileContacts: b2bUserModel[];
   
   constructor(private eventService: EventsService,
+              private notificationService: NotificationService,
+              private profileService: ProfileService,
               private storage: Storage,
               private navCtrl: NavController,
               private modalCrtl: ModalController,
@@ -32,16 +39,24 @@ export class HomePage {
   ngOnInit() {
     this.storage.get('idUserFromDb').then((val)=>{
       if(val != null ){
-        console.log('Your id from db storage is home ', val);
-        this.getEventShedule(val);
+        console.log('Your id from db storage is ', val);
+        this.userStorageId = val;
+        this.getUserProfileContacts(val);
+      //  this.getNotifications(val);
       }else{
         this.navCtrl.navigateRoot('/login');
       }
     })
-
-    console.log("valor onInitTest")
-   // console.log(this.startCountDownDate("2021-11-03"));
   }
+
+  getUserProfileContacts(userId){
+    this.profileService.getUserContacts(userId)
+    .subscribe((data)=>{
+      this.userProfileContacts = data;
+      console.log(data);
+    })
+  }
+  
 
   getEventShedule(userId){
     this.eventService.getScheduleUserEvent(userId).subscribe((data: EventSheduleDetails[])=>{
@@ -71,13 +86,17 @@ export class HomePage {
     //  console.log("valor abajo");
    } 
 
-   async getDetailsEvent(eventId){
-    console.log("this is the view details"+eventId);
+   async getDetailsEvent(userDestinyId, userDestinyName, userDestinyNameLastName, userDestinyPhotoProfileUser){
+
+    console.log("this is the view details"+userDestinyId);
     
     const modal = await this.modalCrtl.create({
       component: ModalDetailsEventPage,
       componentProps:{
-       'eventId': eventId
+       'userDestinyId': userDestinyId,
+       'userDestinyName': userDestinyName,
+       'userDestinyNameLastName' : userDestinyNameLastName,
+       'userDestinyPhotoProfileUser':userDestinyPhotoProfileUser
       }
     });
 

@@ -56,15 +56,15 @@ export class ModalDetailsProfilePage implements OnInit {
   getUserProfileInfo(userId){
     this.profileService.getUserProfileDetails(userId)
     .subscribe((data)=>{
-    
+   /*  
       console.log("profile user details userId" + data[0].userId);
       console.log("profile user details userBrand" + data[0].userBrand);
       console.log("profile user details userName" + data[0].userName);
       console.log("profile user details userTradeName" + data[0].userTradeName);
       console.log("profile user details userProfilePicture" + data[0].userProfilePicture);
       console.log("profile user details userType" + data[0].userType);
-      console.log("profile user details userType" + data[0].userAbout);
-
+      console.log("profile user details userType" + data[0].userAbout); */
+/* 
       this.userFollowedId =  data[0].userId;
       this.userBrand = data[0].userBrand;
       this.userBrand = data[0].userBrand;
@@ -74,7 +74,7 @@ export class ModalDetailsProfilePage implements OnInit {
       this.userType = data[0].userType;
       this.userAbout = data[0].userAbout;
       this.userLevel = data[0].userLevel;
-    
+     */
   });
 }
 

@@ -7,6 +7,8 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { Observable } from 'rxjs';
 import { UserSponsor } from 'src/app/interfaces/userSponsor';
 import { UserComment } from 'src/app/models/user-model';
+import { b2bChatDirectModel } from 'src/app/models/b2b-chat-direct-model';
+import { b2bCreateGroupModel } from 'src/app/models/b2b-create-group-model';
 
 
 @Injectable({
@@ -16,20 +18,53 @@ export class EventsService {
 
   pageEvent = 0;
 
-  url = 'https://domappssuiteservices.com/Wegaut2020/WegautAppWebServices/';
+  url = 'https://domappssuiteservices.com/B2B/WebServices/';
 
   constructor(private http: HttpClient, private fileTransfer: FileTransfer) { }
 
+  //get chat messages
+  getChatMessagesDirect(pull: boolean = false, idUserOrigin: string, idUserDestiny: string, pageEvent: number){
+    let params1 = new HttpParams().set('idUserOrigin', idUserOrigin).set('idUserDestiny', idUserDestiny);
+    return this.http.get<b2bChatDirectModel[]>(`${this.url}GetChatMessagesDirect.php/?page=${ pageEvent }`,{params:params1});
+  }
+
+
+  postNewMessageDirect(messageContent: b2bChatDirectModel){
+    return this.http.post(`${this.url}PostNewMessageDirect.php`, messageContent,  {responseType: 'text'} );
+  }
+
+  //get my chat groups
+
+  getMyGroups(myUserId: string ){
+    let params1 = new HttpParams().set('myUserId', myUserId);
+    return this.http.get<b2bCreateGroupModel[]>(`${this.url}GetMyGroups.php`,{params:params1});
+ 
+  }
+
+  //post group message
+  postNewMessageGroup(messageContent: b2bChatDirectModel){
+    return this.http.post(`${this.url}PostNewMessageGroup.php`, messageContent,  {responseType: 'text'} );
+ 
+  }
+
+   getChatMessagesDirectGroup(pull: boolean = false, idUserOrigin: string, idGroupDestiny: string, pageEvent: number){
+    let params1 = new HttpParams().set('idUserOrigin', idUserOrigin).set('idGroupDestiny', idGroupDestiny);
+    return this.http.get<b2bChatDirectModel[]>(`${this.url}GetChatMessagesGroupsDirect.php/?page=${ pageEvent }`,{params:params1});
+  }
+
+
+  //
+/* 
   getEventsDetails(pull: boolean = false){
     if(pull){
-      this.pageEvent = 0;
+    //  this.pageEvent = 0;
     }
-    this.pageEvent ++;
+  //  this.pageEvent ++;
     return this.http.get<EventDetails[]>(`${this.url}GetEventDetails.php/?page=${ this.pageEvent }`);
    // let params1 = new HttpParams().set('page',this.pageEvent.toString());
    // return this.http.get<EventDetails[]>(`${this.url}GetEventDetails.php`,{params:params1});
   }
-
+ */
   postNewScheduleEvent(scheduleUserEvent: ScheduleUserEvent){
     return this.http.post(`${this.url}PostNewScheduleEvent.php`, scheduleUserEvent,  {responseType: 'text'} );
   }

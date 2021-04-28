@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     
-    <ion-title class="main-header4">Schedule Event</ion-title>
+    <ion-title class="main-header4">Nombre del grupo</ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="closeScheduleModal()">
         <ion-icon slot="end" name="close"></ion-icon>
@@ -16,88 +16,53 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <div *ngIf="eventId; else noDate">
-  <ion-grid fixed class="ion-no-padding">
 
-    <!--*********** Title  ***********-->
+
+  <ion-grid>
+    <div *ngFor="let message of chatMessageDetail" >
+    <ion-row>
   
-    <div class="travel_space1">
-        <ion-item lines="none">
-          
-    <ion-label text-wrap>
-                <h1 class="h1-center">{{eventTitle}}</h1>
-                <ion-text color="medium">
-                    <p class="p1"> {{eventDescp}}</p>
-                    <p class="p1"> {{eventDate}}</p>
-                </ion-text>
-            </ion-label>
-        </ion-item>
-    </div>
+      <ion-col size="9" *ngIf="idUserFromStorage !== message.idUserOrigin" class="message other-message">
   
-  </ion-grid> 
-  <img class="image-post" src={{eventUrlFile}}/>   
-      <ion-grid>
-      <ion-row>
-      <ion-col class="timer" >
-          <p>Faltan solo: {{demo}}!</p>
-         </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-
+        <b>{{message.userName}} {{message.userLastName}}</b><br>
+        <span>{{message.messageContent}}</span>
+        <div class="time" text-right><br>
+          {{message.createAt}}
+        </div>
+      </ion-col>
   
-    <ng-template #noDate>
-      <p> </p>
-         </ng-template>
-    
+      <ion-col offset="3" size="9" *ngIf="idUserFromStorage === message.idUserOrigin" class="message my-message">
   
-<!--   <ion-card *ngFor="let sheduleEvent of eventSheduleDetails">
-    <ion-card-header>
-      <ion-card-title>{{sheduleEvent.eventName}}</ion-card-title>
-      <ion-card-subtitle>{{sheduleEvent.eventDesc}} + {{sheduleEvent.eventDate}}</ion-card-subtitle>
-    </ion-card-header>
-        <ion-card-content>
-         {{sheduleEvent.userLastName}}
-         <ion-avatar slot="start" style="width: 72px;height: 72px;">
-          <img src={{sheduleEvent.eventUrlPhoto}}>
-        </ion-avatar>
-        </ion-card-content>
-  </ion-card>
- -->
- <ion-header [translucent]="true">
-  <ion-toolbar>
-    <div *ngIf="eventId; else noExits">
-      <ion-buttons slot="secondary">
-      </ion-buttons>
-      <ion-title>My Schedules Events</ion-title>
-      <ion-buttons slot="primary">
-        <ion-button (click)="postScheduleEvent(eventId)"  color="terciary">
-          <ion-icon slot="end" name="add"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </div>
-      <ng-template #noExits>
-        <p></p>
-           </ng-template>
-  </ion-toolbar>
-</ion-header>
-
-  <ion-list >
-    <ion-item  *ngFor="let sheduleEvent of eventSheduleDetails">
-      <ion-avatar slot="start" style="width: 72px;height: 72px;">
-        <img [src]="sheduleEvent.eventUrlPhoto">
-      </ion-avatar>
-      <ion-label>
-        <h2 style="font-weight: bold;">Event: {{sheduleEvent.eventName}}</h2>
-        <h2 style="font-weight: bold;">Date:{{sheduleEvent.eventDate}}</h2>
-        <p>{{sheduleEvent.eventDesc}}</p>
-      </ion-label>
-    </ion-item>
-    </ion-list>
-
+        <b>{{message.userName}} {{message.userLastName}}</b><br>
+        <span>{{message.messageContent}}</span>
+        <div class="time" text-right><br>
+          {{message.createAt}}
+        </div>
+      </ion-col>
   
-</ion-content>
-
+    </ion-row>
+  </div>
+  </ion-grid>
+  
+  </ion-content>
+  
+  <ion-footer>
+    <ion-toolbar color="light">
+      <ion-row align-items-center no-padding>
+        <ion-col size="10">
+            <textarea autosize maxRows="4" [(ngModel)]="newMsg" class="message-input">
+            </textarea>
+        </ion-col>
+        <ion-col size="2">
+            <ion-button expand="block" fill="clear" color="primary" class="msg-btn"
+            (click)="sendMessages()">
+          <ion-icon name="send-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-footer>
+   
   

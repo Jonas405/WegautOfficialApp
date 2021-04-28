@@ -4,27 +4,41 @@ import { UserModel } from 'src/app/models/user-model';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { UserEventNum, UserFollowersNumber, UserProfile } from 'src/app/interfaces/user-profile';
 import { EventDetails, EventProfileUser } from 'src/app/interfaces/event';
+import { b2bUserModel } from 'src/app/models/b2b-user-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  url = 'https://domappssuiteservices.com/Wegaut2020/WegautAppWebServices/';
+  url = 'https://domappssuiteservices.com/B2B/WebServices/';
   constructor(private http: HttpClient,
               private fileTransfer: FileTransfer) { }
 
+    getUserProfileDetails(userId:string){
+      let params1 = new HttpParams().set('userId', userId);
+      return this.http.get<b2bUserModel[]>(`${this.url}GetUserProfileDetails.php`,{params: params1})
+    }
 
+    getUserContacts(userId:string){
+      let params1 = new HttpParams().set('userId', userId);
+      return this.http.get<b2bUserModel[]>(`${this.url}GetUserContactsDetails.php`,{params: params1})
+ 
+    }
+
+    postUpdateProfile(updateProfile: b2bUserModel){
+      return this.http.post(`${this.url}PostUpdateProfile.php`, updateProfile,  {responseType: 'text'} );
+    }
+              
+     
+    
+    //-------------------------
   getUserProfileInfo(userId: string){
     let params1 = new HttpParams().set('userId', userId);
     return this.http.get<UserModel[]>(`${this.url}GetScheduleUserEvents.php`,{params: params1})
   }
 
 
-  getUserProfileDetails(userId:string){
-    let params1 = new HttpParams().set('userId', userId);
-    return this.http.get<UserProfile[]>(`${this.url}GetUserProfileDetails.php`,{params: params1})
-  }
 
   getUserProfileEventsDetails(userId:string){
     let params1 = new HttpParams().set('userId', userId);
@@ -50,8 +64,6 @@ export class ProfileService {
     return this.http.get(`${this.url}GetCheckUserFollow.php`,{params: params1})
   }
 
-  postUpdateProfile(updateProfile: UserModel){
-    return this.http.post(`${this.url}PostUpdateProfile.php`, updateProfile,  {responseType: 'text'} );
-  }
+
 
 }

@@ -19,3 +19,32 @@ img {
     opacity: 1 !important;
 }
 
+.login-logo {
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .login-logo img {
+    max-width: 100px;
+  }
+  
+  ion-content.background{
+    --background: url(../../../assets/backgrounimg.png) 0 0/100% 100% no-repeat;
+
+  
+}
+
+.background-image{
+    --background: url(../../../assets/backgrounimg.png) 0 0/100% 100% no-repeat;
+}
+
+.text-color {
+    color: white;
+}
+.myColor {
+    background-color: blue;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }

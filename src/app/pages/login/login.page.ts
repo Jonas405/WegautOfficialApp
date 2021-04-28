@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, IonSlides, NavController } from '@ionic/angular';
-import { UserModel } from 'src/app/models/user-model';
+import { b2bUserModel } from 'src/app/models/b2b-user-model';
 import { LoginService } from './login.service';
 
 @Component({
@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
     },
 ];
 
-  user : UserModel = new UserModel;
+  user : b2bUserModel = new b2bUserModel;
   public showPassword: boolean = false;
   avatarSlide = {
     slidesPerView: 3.5
@@ -83,8 +83,12 @@ export class LoginPage implements OnInit {
     // this.loginService.login(this.loginUser.email, this.loginUser.password)
     console.log(fLogin.valid);
     console.log(this.user);
+    console.log(this.user.userEmail);
+    console.log(this.user.userPass);
     this.serviceLogin.userlogin(this.user.userEmail, this.user.userPass)
     .subscribe(data=>{
+      console.log("entro aqui o no?");
+      console.log(data);
           let navigateParameter = data[0].userId;
           let userName = data[0].userName;
           let userLastName = data[0].userLastName;
@@ -110,12 +114,6 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  register( fRegister: NgForm){
-    console.log(fRegister.valid);
-    fRegister.reset();
-
-  }
-
   showLogin(){
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
@@ -128,38 +126,46 @@ export class LoginPage implements OnInit {
     this.slides.lockSwipes(true);
   }
 
+  register( fRegister: NgForm){
+    console.log(fRegister.valid);
+    if(fRegister.valid ==true){
+      console.log(this.user);
+      this.registerUser(fRegister);
+    }
+  }
+
   registerUser(fRegister: NgForm){
     console.log(this.user);
 
-    if(this.user.userType == undefined){
-      this.presentAlert("User type is mandatory");
-    }
-
-    if(this.user.userType === 'user'){
-        this.serviceLogin.postRegisterUser(this.user)
-        .subscribe(data=>{
-          alert("register successful");
-          fRegister.reset();
-          console.log(data);
-          this.showRegister();
-        },
-        error =>{
-         this.presentAlert("this email already exists, please tray with another");
-        });
-    } 
-    
-    if(this.user.userType === 'enterprise'){
-      this.serviceLogin.postRegisterEnterpriseUser(this.user)
+    this.serviceLogin.postRegisterUser(this.user)
+    .subscribe(data=>{
+      alert("register successful");
+      console.log(data);
+      this.serviceLogin.userlogin(this.user.userEmail, this.user.userPass)
       .subscribe(data=>{
+        console.log("entro aqui o no?");
         console.log(data);
-        alert("register successful");
-        fRegister.reset();
-        this.showRegister();
+            let navigateParameter = data[0].userId;
+            let userName = data[0].userName;
+            let userLastName = data[0].userLastName;
+
+            console.log("return parameter");
+            console.log(userName + userLastName);
+            console.log(navigateParameter);
+            this.navCtrl.navigateRoot('/main/tabs/events', { animated:true });
       },
-      error =>{
-       this.presentAlert("this email already exists, please try whit another");
-      });
-    }
+       error =>{
+        this.presentAlert("User and Password Incorrect, please try again");
+       });
+      //this.showRegister();
+      //fRegister.reset();
+
+      
+    },
+    error =>{
+     this.presentAlert("this email already exists, please tray with another");
+     fRegister.reset();
+    });
 
 
   }

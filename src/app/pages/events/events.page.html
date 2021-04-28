@@ -1,74 +1,44 @@
 <ion-header class="ion-no-border">
   <ion-toolbar  color="tertiary">
-    <ion-buttons slot="start">
+<!--     <ion-buttons slot="start">
       <ion-button>
         <img  src="../../assets/logow.JPG" style="width: 30px;height: 30px;"/>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
 
     <ion-buttons slot="secondary">
     </ion-buttons>
-    <ion-title class="main-header4">Events</ion-title>
+    <ion-title class="main-header4">
+      <img  src="../../../assets/logoconejoblanco.png" style="width: 30px;height: 30px;"/>
+    </ion-title>
     <ion-buttons slot="primary">
-      <ion-button  (click)="newEvent()" color="secondary">
+      <ion-button  (click)="newGroup()" color="secondary">
         <ion-icon slot="icon-only" name="add"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
 
-    <!-- Refresher -->
-    <ion-refresher slot="fixed" (ionRefresh)="recharge( $event )">
+  <ion-content>
+    <ion-refresher slot="fixed">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
+  
+      <ion-card  *ngFor="let group of myGroups"  (click)="openChatRoom(group.chat_room_id, group.name)">
+              <ion-item>
+                <ion-avatar slot="start" style="width: 72px;height: 72px;">
+                  <img [src]="group.chat_room_photo">
+                </ion-avatar>
+                <ion-label>
+                  <h2>{{group.name}}</h2>
+                  <p>Create Date : {{group.created_at}}</p>
+                </ion-label>
+              </ion-item>
+             
+      </ion-card>
+  </ion-content>
 
-  <ion-list>
-    <ion-item-sliding *ngFor="let event of lstEvents">
-      <ion-item>
-        <ion-card>
-
-          <ion-card-header>
-            <ion-card-title>{{event.title}}</ion-card-title>
-            <ion-card-subtitle>{{event.date}}</ion-card-subtitle>
-          </ion-card-header>
-            <img (click)="getDetailsEvent(event.eventId)" class="image-post" src={{event.eventUrlFile}}/>
-            <ion-item lines="none">
-                <ion-icon  *ngIf="!event.userFaveDate; else alreadyFav"
-                  (click)="incrementLike(event)"
-                  (click)="likeEvent(event.eventId)"
-                slot="start" name="heart-outline"
-              >
-              </ion-icon>
-              <ng-template #alreadyFav>
-                <ion-icon
-                (click)="incrementLike(event)"
-                (click)="likeEvent(event.eventId)"
-                 slot="start" name="heart" [style.color]="'#EF3B51'"></ion-icon>
-              </ng-template>
-              
-              <p>{{event.eventLikes}}</p>
-                <ion-icon (click)="scheduleEvent(event.eventId,event.date, event.title,event.descrip,event.eventUrlFile)" slot="end" name="calendar"></ion-icon>
-            </ion-item>
-              <ion-card-content>
-               {{event.descrip}}
-              </ion-card-content>
-
-        </ion-card>
-      </ion-item>
-    </ion-item-sliding>
-  </ion-list>
-
-          <!-- Infinite Scroll -->
-          <ion-infinite-scroll
-          threshold="150px"
-          (ionInfinite)="nextEvents($event)">
-        <ion-infinite-scroll-content>
-        </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-
-</ion-content>
 
 
 

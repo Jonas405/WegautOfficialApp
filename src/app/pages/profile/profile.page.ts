@@ -9,6 +9,7 @@ import { ModalDetailsEventPage } from '../events/modal-details-event/modal-detai
 import { ModalFavEventUserPage } from '../events/modal-fav-event-user/modal-fav-event-user.page';
 import { ModalFollowersDetailsPage } from './modal-followers-details/modal-followers-details.page';
 import { ModalProfileSettingsPage } from './modal-profile-settings/modal-profile-settings.page';
+import { b2bUserModel } from 'src/app/models/b2b-user-model';
 
 @Component({
   selector: 'app-profile',
@@ -18,10 +19,13 @@ import { ModalProfileSettingsPage } from './modal-profile-settings/modal-profile
 export class ProfilePage implements OnInit {
 
   eventProfileUser: EventProfileUser[];
-  userProfile: UserProfile;
+  
   userFollowersNumber: UserFollowersNumber;
   userEventNumber: UserEventNum;
   userStorageId: string;
+//b2b
+  userProfile: b2bUserModel;
+  userProfileContacts: b2bUserModel[];
   constructor(
                private profileService: ProfileService,
                private storage: Storage,
@@ -33,9 +37,11 @@ export class ProfilePage implements OnInit {
       if(val != null ){
         console.log('Your id from db storage is ', val);
         this.getUserProfileInfo(val);
-        this.getUserEventsInfo(val);
-        this.getUserFollowers(val);
-        this.getUserEventNum(val);
+        this.getUserProfileContacts(val);
+        
+     //   this.getUserEventsInfo(val);
+     //   this.getUserFollowers(val);
+     //   this.getUserEventNum(val);
         this.userStorageId = val;
       }else{
         this.navCtrl.navigateRoot('/login');
@@ -47,35 +53,42 @@ export class ProfilePage implements OnInit {
 
   }
 
-  userBrand: string;
-  userName: string;
-  userTradeName: string;
-  userProfilePicture: string;
-  userType: string;
-  userAbout: string;
-  userLevel: string;
+    userEmail:       string;
+    userPass:       string;
+    userTlf:       string;
+    userName:       string;
+    userLastName:       string;
+    photoProfileUser:       string;
+    createAt:       string;
+    userAbout:       string;
 
   getUserProfileInfo(userId){
     this.profileService.getUserProfileDetails(userId)
     .subscribe((data)=>{
-    
-      console.log("profile user details userBrand" + data[0].userBrand);
-      console.log("profile user details userName" + data[0].userName);
-      console.log("profile user details userTradeName" + data[0].userTradeName);
-      console.log("profile user details userProfilePicture" + data[0].userProfilePicture);
-      console.log("profile user details userType" + data[0].userType);
-      console.log("profile user details userType" + data[0].userAbout);
 
-      this.userBrand = data[0].userBrand;
+      this.userEmail = data[0].userEmail;
+      this.userPass = data[0].userPass;
+      this.userTlf = data[0].userTlf;
       this.userName = data[0].userName;
-      this.userTradeName = data[0].userTradeName;
-      this.userProfilePicture = data[0].userProfilePicture;
-      this.userType = data[0].userType;
+      this.userLastName = data[0].userLastName;
+      this.photoProfileUser = data[0].photoProfileUser;
       this.userAbout = data[0].userAbout;
-      this.userLevel = data[0].userLevel;
     
   });
 }
+
+  getUserProfileContacts(userId){
+    this.profileService.getUserContacts(userId)
+    .subscribe((data)=>{
+      this.userProfileContacts = data;
+      console.log(data);
+    })
+  }
+
+
+
+
+//test
 
 getUserEventsInfo(userId){
   this.profileService.getUserProfileEventsDetails(userId)
@@ -166,10 +179,10 @@ async scheduleEvent(userId){
   }
 
   doRefresh(event){
-    console.log("do refresh")
+/*     console.log("do refresh")
     this.userProfilePicture = null;
       this.ngOnInit();
-      event.target.complete();
+      event.target.complete(); */
   }
    
 }

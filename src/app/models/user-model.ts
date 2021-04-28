@@ -10,6 +10,7 @@ export class UserModel {
     userUrlProfilePicture?: string;
     userLevel?: string;
     userAbout?: string;
+    usertlf?: string;
   
 }
 

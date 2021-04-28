@@ -8,7 +8,7 @@
     </ion-buttons>
 
     <ion-title class="main-header4">
-    {{userBrand}}
+    {{userName}}
     </ion-title>
 
     <ion-buttons slot="end">
@@ -32,63 +32,60 @@
   <ion-list lines="none">
     <ion-item lines="none">
       <ion-avatar slot="start" style="width: 72px;height: 72px;">
-        <img [src]="userProfilePicture">
+        <img [src]="photoProfileUser">
       </ion-avatar>
       <ion-label>
         <h1 style="font-weight: bold;">{{userName}}</h1>
-        <h2>{{userTradeName}}</h2>
+        <h2>{{userLastName}}</h2>
         <h3>{{userAbout}}</h3>
       </ion-label>
     </ion-item>
-    <ion-card>
+   <ion-card>
       <ion-card-content>
       <ion-row>
         <ion-col>
-          <h3 (click)="checkFollowers()">{{userFollowersNumber}}</h3>
-          <h4>Seguidores</h4>
+          <h3 ></h3>
+          <h4></h4>
         </ion-col>
   
         <ion-col>
-          <h3>{{userEventNumber}}</h3>
-          <h4>Eventos</h4>
+          <h3></h3>
+          <h4>Contactos</h4>
         </ion-col>
   
         <ion-col>
-          <h3>{{userLevel}}</h3>
-          <h4>Nivel</h4>
+          <h3></h3>
+          <h4></h4>
         </ion-col>
         </ion-row>
       </ion-card-content>
-    </ion-card>
+    </ion-card> 
   </ion-list>
 
-  <ion-row>
-    <ion-col>
-      <ion-icon (click)="goToScheduleEvents()" name="calendar" [style.color]="'#4040ff'"></ion-icon>
-      <p size="6">Asistiré</p>
-    </ion-col>
-
-    <ion-col>
-      <ion-icon (click)="getUserFavEvets()" name="heart" [style.color]="'#EF3B51'"></ion-icon>
-      <p size="6">Favoritos</p>
-    </ion-col>
-    </ion-row>
-    <div  *ngIf="!eventProfileUser; else followed">
-      <p class="p2">user without events</p>
-    </div>
-    <ng-template #followed>
-    <ion-card>
-      <ion-card-content>
-        
-      <ion-row>
-        <ion-col sizeLg="4" sizeMd="4" sizeXs="4" *ngFor="let event of eventProfileUser">
-            <img (click)="getDetailsEvent(event.eventId)" class="img-event" src="{{event.eventPrincipalPhoto}}"/>
-            <p class="p1">{{event.eventTitle}}</p>
-        </ion-col>
-        </ion-row>
-      </ion-card-content>
-    </ion-card>
-  </ng-template>
+  <ion-content padding>
+    <!--      <ion-list lines="none">
+          <ion-item lines="none"  *ngFor="let not of notificationDetails">
+            <ion-avatar slot="start" style="width: 72px;height: 72px;">
+              <img [src]="not.userPhoto" (click)="goToSponsorProfile(not.idUser)">
+            </ion-avatar>
+            <ion-label>
+              <h2 style="font-weight: bold;">{{not.userName}} {{not.userLastName}}</h2>
+              <p>{{not.notificationDesc}}</p>
+            </ion-label>
+          </ion-item>
+          </ion-list> -->
+    
+    
+          <ion-item *ngFor="let userContact of userProfileContacts">
+            <ion-avatar slot="start">
+              <img [src]="userContact.photoProfileUser">
+            </ion-avatar>
+            <ion-label>
+              <h2>{{userContact.userName}} {{userContact.userLastName}}</h2>
+              <h3>{{userContact.userAbout}}</h3>
+            </ion-label>
+          </ion-item>
+        </ion-content>
 </ion-content>
 
 

@@ -14,7 +14,7 @@ export class LoginService {
 
   redirectUrl: string;
   @Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
-  url = 'https://domappssuiteservices.com/Wegaut2020/WegautAppWebServices/';
+  url = 'https://domappssuiteservices.com/B2B/WebServices/';
 
   constructor(private http: HttpClient,
               private storage: Storage,

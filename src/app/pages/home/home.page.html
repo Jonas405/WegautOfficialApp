@@ -21,7 +21,7 @@
     </ion-buttons>
 
     
-    <ion-title class="main-header4">Schedule Events</ion-title>
+    <ion-title class="main-header4">Directos</ion-title>
     <!-- <ion-buttons slot="end">
       <ion-button class="badge-button" routerLink="/fire-signin" routerDirection="forward">
         <ion-icon name="person-circle-outline" color="light">
@@ -52,23 +52,17 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-    <ion-card  *ngFor="let sheduleEvent of eventSheduleDetails" (click)="getDetailsEvent(sheduleEvent.eventId)">
+    <ion-card  *ngFor="let contact of userProfileContacts" (click)="getDetailsEvent(contact.userId, contact.userName, contact.userLastName, contact.photoProfileUser)">
             <ion-item>
               <ion-avatar slot="start" style="width: 72px;height: 72px;">
-                <img [src]="sheduleEvent.eventUrlPhoto">
+                <img [src]="contact.photoProfileUser">
               </ion-avatar>
               <ion-label>
-                <h2>{{sheduleEvent.eventName}}</h2>
-                <p>Event Date : {{sheduleEvent.eventDate}}</p>
-                <p>{{sheduleEvent.eventDesc}}</p>
+                <h2>{{contact.userName}}</h2>
+                <p>Event Date : {{contact.userLastName}}</p>
+                <p>{{contact.userId}}</p>
               </ion-label>
             </ion-item>
-            <ion-row>
-              <ion-col></ion-col>
-              <ion-col>
-                <p >Faltan solo:{{startCountDownDate(sheduleEvent.eventDate)}}!</p>
-              </ion-col>
-            </ion-row>
            
     </ion-card>
 </ion-content>

@@ -5,6 +5,9 @@ import { Storage } from '@ionic/storage';
 import { UserProfile } from 'src/app/interfaces/user-profile';
 import { UserFollow } from 'src/app/models/user-model';
 import { ModalDetailsProfilePage } from '../../profile/modal-details-profile/modal-details-profile.page';
+import { NotificationService } from '../../notification/notification.service';
+import { b2bUserModel } from 'src/app/models/b2b-user-model';
+import { b2bAddContact } from 'src/app/models/b2b-add-contact-model';
 
 @Component({
   selector: 'app-modal-follow-users',
@@ -13,21 +16,24 @@ import { ModalDetailsProfilePage } from '../../profile/modal-details-profile/mod
 })
 export class ModalFollowUsersPage implements OnInit {
 
-  usersProfile : UserProfile[];
+  usersProfile : b2bUserModel[];
   userFollow = new UserFollow;
+  b2bAddContact = new b2bAddContact;
 
   constructor(private modalCrtl: ModalController,
               private storage: Storage,
               private navCtrl: NavController,
-              private homeService: HomeService) { }
+              private homeService: HomeService,
+              private notificationService: NotificationService) { }
 
   ngOnInit() {
 
     this.storage.get('idUserFromDb').then((val)=>{
       if(val != null ){
+
         console.log('Your id from db storage is home ', val);
-        this.homeService.getUserToFollow(val)
-        .subscribe((data: UserProfile[])=>{
+        this.notificationService.getNewContacts(val)
+        .subscribe((data: b2bUserModel[])=>{
           this.usersProfile = data;
           console.log(this.usersProfile); 
         })
@@ -35,6 +41,26 @@ export class ModalFollowUsersPage implements OnInit {
         this.navCtrl.navigateRoot('/login');
       }
     })
+  }
+
+  addContact(userIdDestiny){
+  
+    this.storage.get('idUserFromDb').then((val)=>{
+      if(val != null ){
+        console.log('Your id from db storage is home ', val);
+        console.log(userIdDestiny)
+        this.b2bAddContact.id_user_destiny = userIdDestiny;
+        this.b2bAddContact.id_user_origin = val;
+        console.log(this.b2bAddContact);
+        this.notificationService.postAddNewContact(this.b2bAddContact)
+        .subscribe(data=>{
+          console.log(data);   
+        })
+      }else{
+        this.navCtrl.navigateRoot('/login');
+      }
+    })
+
   }
 
   followUser(userId){
